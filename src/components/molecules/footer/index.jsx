@@ -1,0 +1,109 @@
+// import React from "react";
+import { FaStoreAlt } from "react-icons/fa";
+import { AiFillInstagram } from "react-icons/ai";
+import { BsTelephoneFill } from "react-icons/bs";
+
+export const Footer = () => {
+  return (
+    <footer className="bg-white">
+      <div className="mx-auto w-full">
+        <div className="grid grid-cols-1 gap-8  py-6 lg:py-8 md:grid-cols-3">
+          <div className="border-theme-brown border-0 md:border-r-4 px-10 md:px-14">
+            <div className="flex items-center gap-3">
+              <img src="./logo.svg" alt="logo" />
+              <h2 className="text:md md:text-xl font-semibold text-gray-900 ">
+                Yolls Cake & Cookies
+              </h2>
+            </div>
+            <div className="px-2 mt-4">
+              <p className="text-sm text-justify">
+                We use traditional recipes passed down from generation to
+                generation. we maintain quality with natural ingredients. The
+                products we offer are freshly made
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-8 border-theme-brown border-0 md:border-r-4 px-10 md:px-14">
+            <ul className="text-gray-500  font-medium">
+              <li className="mb-4">
+                <a href="#" className="hover:underline">
+                  Home
+                </a>
+              </li>
+              <li className="mb-4">
+                <a href="#" className="hover:underline">
+                  Menu
+                </a>
+              </li>
+              <li className="mb-4">
+                <a href="#" className="hover:underline">
+                  About Us
+                </a>
+              </li>
+              <li className="mb-4">
+                <a href="#" className="hover:underline">
+                  Customer Service
+                </a>
+              </li>
+              <li className="mb-4">
+                <a href="#" className="hover:underline">
+                  Career
+                </a>
+              </li>
+            </ul>
+            <ul className="text-gray-500  font-medium">
+              <li className="mb-4">
+                <a href="#" className="hover:underline">
+                  Testimony
+                </a>
+              </li>
+              <li className="mb-4">
+                <a href="#" className="hover:underline">
+                  Login
+                </a>
+              </li>
+              <li className="mb-4">
+                <a href="#" className="hover:underline">
+                  Order
+                </a>
+              </li>
+              <li className="mb-4">
+                <a href="#" className="hover:underline">
+                  Login
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="px-10 md:px-14">
+            <ul className="text-gray-500  font-medium">
+              <li className="mb-4">
+                <a href="#" className="hover:underline">
+                  <FaStoreAlt className="inline-block mr-2" size={20} />
+                  Jln. Nusantara raya No.20
+                </a>
+              </li>
+              <li className="mb-4">
+                <AiFillInstagram className="inline-block mr-2" size={20} />
+                <a href="#" className="hover:underline">
+                  cafe.yola
+                </a>
+              </li>
+              <li className="mb-4">
+                <BsTelephoneFill className="inline-block mr-2" size={20} />
+                <a href="#" className="hover:underline">
+                  082374294234
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className=" py-6 bg-gray-100 text-center  w-full">
+          <span className="text-sm text-gray-500 ">
+            © 2023 <a href="https://flowbite.com/">Yolls Cake & Cookies</a>. All
+            Rights Reserved.
+          </span>
+        </div>
+      </div>
+    </footer>
+  );
+};

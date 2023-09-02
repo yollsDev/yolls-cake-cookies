@@ -1,7 +1,14 @@
 // import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { HomePage } from "./pages/landing_page/HomePage";
 import Guest from "./layouts/Guest";
+import {
+  HomePage,
+  AboutUsPage,
+  MenuPage,
+  CustomerServicePage,
+  TestimonyPage,
+  CareerPage,
+} from "./pages/landing_page";
 
 const router = createBrowserRouter([
   {
@@ -11,18 +18,26 @@ const router = createBrowserRouter([
         path: "/",
         element: <HomePage />,
       },
-      // {
-      //   path: "/login",
-      //   element: <LoginPageView />,
-      // },
-      // {
-      //   path: "/signup",
-      //   element: <SignUpPageView />,
-      // },
-      // {
-      //   path: "/tour",
-      //   element: <TourCollectionsPageView />,
-      // },
+      {
+        path: "/about-us",
+        element: <AboutUsPage />,
+      },
+      {
+        path: "/menu",
+        element: <MenuPage />,
+      },
+      {
+        path: "/customer-service",
+        element: <CustomerServicePage />,
+      },
+      {
+        path: "/testimony",
+        element: <TestimonyPage />,
+      },
+      {
+        path: "/career",
+        element: <CareerPage />,
+      },
     ],
   },
 ]);
