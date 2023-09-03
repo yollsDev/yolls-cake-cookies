@@ -15,28 +15,28 @@ export const MenuModule = () => {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 md:gap-8 gap-2 mt-8">
             <MenuCard
-              img={"./menu/menu_1.png"}
+              img={"/menu/menu_1.png"}
               name={"Red Velvet"}
               desc={
                 "Lorem ipsum dolor sit amet consectetur. Lobortis sem magna nisi aliquet fermentum cursus sit. Quis egestas ut vitae risus a"
               }
             />
             <MenuCard
-              img={"./menu/menu_1.png"}
+              img={"/menu/menu_1.png"}
               name={"Red Velvet"}
               desc={
                 "Lorem ipsum dolor sit amet consectetur. Lobortis sem magna nisi aliquet fermentum cursus sit. Quis egestas ut vitae risus a"
               }
             />
             <MenuCard
-              img={"./menu/menu_1.png"}
+              img={"/menu/menu_1.png"}
               name={"Red Velvet"}
               desc={
                 "Lorem ipsum dolor sit amet consectetur. Lobortis sem magna nisi aliquet fermentum cursus sit. Quis egestas ut vitae risus a"
               }
             />
             <MenuCard
-              img={"./menu/menu_1.png"}
+              img={"/menu/menu_1.png"}
               name={"Red Velvet"}
               desc={
                 "Lorem ipsum dolor sit amet consectetur. Lobortis sem magna nisi aliquet fermentum cursus sit. Quis egestas ut vitae risus a"

@@ -64,7 +64,7 @@ export const CustomerServiceModule = () => {
 
   return (
     <div>
-      <section className="bg-[url('./patternBG1.svg')] bg-cover bg-left flex md:items-start items-center justify-between md:flex-row flex-col px-5 md:px-28 gap-5 md:pt-32 pt-28 pb-10">
+      <section className="bg-[url('/patternBG1.svg')] bg-cover bg-left flex md:items-start items-center justify-between md:flex-row flex-col px-5 md:px-28 gap-5 md:pt-32 pt-28 pb-10">
         <div className="w-full md:w-1/2">
           <h1 className="font-extrabold text-6xl text-[#78002C] mb-5">
             Customer Service

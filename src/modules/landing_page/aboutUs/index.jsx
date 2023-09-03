@@ -5,9 +5,9 @@ import { LinkButton } from "../../../components";
 export const AboutUsModule = () => {
   return (
     <div>
-      <section className="bg-[url('./patternBG1.svg')] bg-cover bg-left flex items-center justify-center gap-2 md:gap-12 px-5 md:px-28 flex-col md:flex-row py-28">
+      <section className="bg-[url('/patternBG1.svg')] bg-cover bg-left flex items-center justify-center gap-2 md:gap-12 px-5 md:px-28 flex-col md:flex-row py-28">
         <img
-          src="./aboutUsHero.svg"
+          src="/aboutUsHero.svg"
           className="h-auto md:w-1/2 max-w-full mb-10 md:mb-0"
         />
         <div>
