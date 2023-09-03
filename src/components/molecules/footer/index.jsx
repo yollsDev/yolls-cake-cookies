@@ -1,7 +1,7 @@
 // import React from "react";
 import { FaStoreAlt } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
-import { BsTelephoneFill } from "react-icons/bs";
+import { IoLogoWhatsapp } from "react-icons/io";
 
 export const Footer = () => {
   return (
@@ -26,44 +26,39 @@ export const Footer = () => {
           <div className="grid grid-cols-2 gap-8 border-theme-brown border-0 md:border-r-4 px-10 md:px-14">
             <ul className="text-gray-500  font-medium">
               <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a href="/" className="hover:underline">
                   Home
                 </a>
               </li>
               <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a href="/menu" className="hover:underline">
                   Menu
                 </a>
               </li>
               <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a href="/about-us" className="hover:underline">
                   About Us
                 </a>
               </li>
               <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a href="customer-service" className="hover:underline">
                   Customer Service
-                </a>
-              </li>
-              <li className="mb-4">
-                <a href="#" className="hover:underline">
-                  Career
                 </a>
               </li>
             </ul>
             <ul className="text-gray-500  font-medium">
               <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a href="/career" className="hover:underline">
+                  Career
+                </a>
+              </li>
+              <li className="mb-4">
+                <a href="/testimony" className="hover:underline">
                   Testimony
                 </a>
               </li>
               <li className="mb-4">
-                <a href="#" className="hover:underline">
-                  Login
-                </a>
-              </li>
-              <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a href="/order" className="hover:underline">
                   Order
                 </a>
               </li>
@@ -77,21 +72,30 @@ export const Footer = () => {
           <div className="px-10 md:px-14">
             <ul className="text-gray-500  font-medium">
               <li className="mb-4">
-                <a href="#" className="hover:underline">
+                <a
+                  href="https://goo.gl/maps/GSyVWEmq6K3SJgRJ7"
+                  className="hover:underline"
+                >
                   <FaStoreAlt className="inline-block mr-2" size={20} />
                   Jln. Nusantara raya No.20
                 </a>
               </li>
               <li className="mb-4">
                 <AiFillInstagram className="inline-block mr-2" size={20} />
-                <a href="#" className="hover:underline">
-                  cafe.yola
+                <a
+                  href="https://www.instagram.com/yolls.cake/"
+                  className="hover:underline"
+                >
+                  @yolls.cake
                 </a>
               </li>
               <li className="mb-4">
-                <BsTelephoneFill className="inline-block mr-2" size={20} />
-                <a href="#" className="hover:underline">
-                  082374294234
+                <IoLogoWhatsapp className="inline-block mr-2" size={20} />
+                <a
+                  href="https://wa.me/6281380330388?text=Halo%20Yolls%20Cake!"
+                  className="hover:underline"
+                >
+                  081380330388
                 </a>
               </li>
             </ul>
@@ -99,8 +103,7 @@ export const Footer = () => {
         </div>
         <div className=" py-6 bg-gray-100 text-center  w-full">
           <span className="text-sm text-gray-500 ">
-            © 2023 <a href="https://flowbite.com/">Yolls Cake & Cookies</a>. All
-            Rights Reserved.
+            © 2023 <a href="/">Yolls Cake & Cookies</a>. All Rights Reserved.
           </span>
         </div>
       </div>

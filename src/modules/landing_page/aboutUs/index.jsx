@@ -5,7 +5,7 @@ import { LinkButton } from "../../../components";
 export const AboutUsModule = () => {
   return (
     <div>
-      <section className="bg-[url('./patternBG1.svg')] h-screen md:h-[90vh] bg-cover bg-left flex items-center justify-center gap-2 md:gap-12 px-5 md:px-28 flex-col md:flex-row">
+      <section className="bg-[url('./patternBG1.svg')] bg-cover bg-left flex items-center justify-center gap-2 md:gap-12 px-5 md:px-28 flex-col md:flex-row py-28">
         <img
           src="./aboutUsHero.svg"
           className="h-auto md:w-1/2 max-w-full mb-10 md:mb-0"
@@ -63,12 +63,11 @@ export const AboutUsModule = () => {
             Our Instagram
           </h1>
           <p className="text-lg mb-12 ">
-            Follow our instagram @yolls.cake.cookies to get the latest info from
-            us!
+            Follow our instagram @yolls.cake to get the latest info from us!
           </p>
           <LinkButton
-            text={"@Instagram"}
-            to={"https://goo.gl/maps/tgL3RGrojcZ69nUX7"}
+            text={"@yolls.cake"}
+            to={"https://www.instagram.com/yolls.cake/"}
             className={
               "bg-theme-brown text-white hover:border-2 hover:border-theme-brown hover:bg-transparent hover:text-[#AE4E38]"
             }
@@ -80,7 +79,7 @@ export const AboutUsModule = () => {
         <div className="flex justify-center gap-5">
           <LinkButton
             text={"Whatsapp"}
-            to={"/"}
+            to={"https://wa.me/6281380330388?text=Halo%20Yolls%20Cake!"}
             className={
               "bg-theme-brown text-white hover:bg-white hover:text-theme-brown min-w-[150px]"
             }
@@ -88,7 +87,7 @@ export const AboutUsModule = () => {
 
           <LinkButton
             text={"Customer Service"}
-            to={"/"}
+            to={"/customer-service"}
             className={
               "bg-theme-brown text-white hover:bg-white hover:text-theme-brown min-w-[150px]"
             }

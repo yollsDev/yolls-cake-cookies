@@ -5,7 +5,7 @@ import { LinkButton, MenuCard } from "../../../components";
 export const MenuModule = () => {
   return (
     <div>
-      <section className="bg-theme-cream px-5 md:px-28 pt-24 pb-10 md:pt-28 md:pb-14">
+      <section className="bg-theme-cream px-5 md:px-28 pt-28 pb-10 md:pb-14">
         <h1 className="font-extrabold text-6xl text-[#78002C] mb-10 text-center">
           Our Menu
         </h1>
@@ -50,7 +50,7 @@ export const MenuModule = () => {
         <div className="flex justify-center">
           <LinkButton
             text={"Order Now!"}
-            to={"/"}
+            to={"/menu"}
             className={
               "bg-theme-brown text-white hover:bg-white hover:text-theme-brown min-w-[150px]"
             }
