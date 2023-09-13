@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Guest from "./layouts/Guest";
+// import Guest from "./layouts/Guest";
 import {
   HomePage,
   AboutUsPage,
@@ -9,7 +9,15 @@ import {
   TestimonyPage,
   CareerPage,
 } from "./pages/landing_page";
-
+import { Auth, Guest, Admin } from "./layouts";
+import {
+  LoginPage,
+  RegisterPage,
+  MenuManagementPage,
+  PaymentManagementPage,
+  MemberDataPage,
+} from "./pages/admin_page";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const router = createBrowserRouter([
   {
     element: <Guest />,
@@ -40,12 +48,46 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    element: <Auth />,
+    children: [
+      {
+        path: "/auth/admin/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/auth/admin/signup",
+        element: <RegisterPage />,
+      },
+    ],
+  },
+  {
+    element: <Admin />,
+    children: [
+      {
+        path: "/admin/menu-management",
+        element: <MenuManagementPage />,
+      },
+      {
+        path: "/admin/payment-management",
+        element: <PaymentManagementPage />,
+      },
+      {
+        path: "/admin/member-data",
+        element: <MemberDataPage />,
+      },
+    ],
+  },
 ]);
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </>
   );
 }

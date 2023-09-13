@@ -5,12 +5,12 @@ import { IoLogoWhatsapp } from "react-icons/io";
 
 export const Footer = () => {
   return (
-    <footer className="bg-white">
+    <footer className="bg-theme-pink bottom-0 relative">
       <div className="mx-auto w-full">
         <div className="grid grid-cols-1 gap-8  py-6 lg:py-8 md:grid-cols-3">
           <div className="border-theme-brown border-0 md:border-r-4 px-10 md:px-14">
             <div className="flex items-center gap-3">
-              <img src="./logo.svg" alt="logo" />
+              <img src="/logo.svg" alt="logo" />
               <h2 className="text:md md:text-xl font-semibold text-gray-900 ">
                 Yolls Cake & Cookies
               </h2>

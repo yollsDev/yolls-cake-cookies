@@ -3,7 +3,7 @@
 import { Outlet } from "react-router-dom";
 import { Footer, TopNavbar } from "../components";
 
-function Guest() {
+export const Guest = () => {
   return (
     <div className="w-full min-h-screen">
       <TopNavbar />
@@ -13,6 +13,4 @@ function Guest() {
       <Footer />
     </div>
   );
-}
-
-export default Guest;
+};
