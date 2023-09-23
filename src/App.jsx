@@ -16,6 +16,9 @@ import {
   MenuManagementPage,
   PaymentManagementPage,
   MemberDataPage,
+  MenuDetailPage,
+  MenuEditPage,
+  MenuAddPage,
 } from "./pages/admin_page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const router = createBrowserRouter([
@@ -76,18 +79,26 @@ const router = createBrowserRouter([
         path: "/admin/member-data",
         element: <MemberDataPage />,
       },
+      {
+        path: "/admin/menu-detail/:id",
+        element: <MenuDetailPage />,
+      },
+      {
+        path: "/admin/menu-edit/:id",
+        element: <MenuEditPage />,
+      },
+      {
+        path: "/admin/menu-add",
+        element: <MenuAddPage />,
+      },
     ],
   },
 ]);
 
-const queryClient = new QueryClient();
-
 function App() {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
+      <RouterProvider router={router} />
     </>
   );
 }

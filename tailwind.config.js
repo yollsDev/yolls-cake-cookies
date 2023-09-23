@@ -10,6 +10,7 @@ export default {
           peach: "#FFB1A7",
           cream: "#F0D9C7",
           pink: "#FDD5D3",
+          error: "#FF5858",
         },
       },
     },

@@ -1,9 +1,24 @@
 import { get } from "react-hook-form";
 import { supabase } from "../../config/supabaseClient";
 
+export const getUser = async () => {
+  try {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+    if (error) {
+      throw new Error(error.message);
+    }
+    return { user, error };
+  } catch (error) {
+    console.error("User error:", error.message);
+    throw error;
+  }
+};
+
 export const signUpRequest = async (params) => {
   try {
-    // Step 1: Register the user using Supabase Auth
     const { data, error } = await supabase.auth.signUp({
       email: params.email,
       password: params.password,
@@ -25,7 +40,6 @@ export const signUpRequest = async (params) => {
       data: { user },
     } = await supabase.auth.getUser();
 
-    // Step 2: Add the user to the users table
     const { data: userRecord, error: userError } = await supabase
       .from("users")
       .upsert([
@@ -42,7 +56,6 @@ export const signUpRequest = async (params) => {
     }
 
     if (params.role === "MEMBER") {
-      // Step 3: Add the user to the members table
       const { data: memberRecord, error: memberError } = await supabase
         .from("members")
         .upsert([
@@ -60,7 +73,9 @@ export const signUpRequest = async (params) => {
       }
     }
 
-    return { user };
+    // console.log(`data`, user);
+
+    return { data };
   } catch (error) {
     console.error("Sign-up error:", error);
     throw error;
@@ -74,15 +89,12 @@ export const loginRequest = async (params) => {
       password: params.password,
     });
 
-    // console.log(`error`, error);
-
     if (error) {
       throw new Error(error.message);
     }
-
     return { data, error };
   } catch (error) {
     console.error("Login error request:", error.message);
-    return { error: error.message };
+    throw error;
   }
 };

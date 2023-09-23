@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { registerValidationSchema } from "../../../../validationSchema";
 import { UseSignUp } from "../../../../hooks/auth/hooks";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 export const RegisterForm = ({ type }) => {
   const {
@@ -22,23 +23,54 @@ export const RegisterForm = ({ type }) => {
       email: "",
       password: "",
       confirmPassword: "",
-      role: { type },
+      role: type,
     },
   });
 
-  const { mutate, isLoading, isError, error } = UseSignUp();
+  const handleError = async (error) => {
+    // console.log(`Register Error`, error);
+    Swal.fire({
+      toast: true,
+      title: await error.message,
+      icon: "error",
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+  const handleSuccess = async (data) => {
+    console.log(`Register Success`);
+    reset();
+    Swal.fire({
+      toast: true,
+      title: "Register Success!",
+      icon: "success",
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+
+  const { mutate, isLoading, isError, error, data } = UseSignUp(
+    handleError,
+    handleSuccess
+  );
 
   const onSubmit = async (data) => {
     try {
       await mutate(data);
-      console.log(`Register Success`, data);
-      reset();
-      // Registration successful, you can handle success here (e.g., redirect)
     } catch (error) {
-      console.log(`Register Error`, error);
-      // Registration failed, error contains the error message
+      Swal.fire({
+        toast: true,
+        title: await error,
+        icon: "error",
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
+
   return (
     <div className="w-full">
       <form
@@ -101,7 +133,7 @@ export const RegisterForm = ({ type }) => {
           {isLoading ? "Signing Up..." : "Sign Up"}
         </button>
       </form>
-      {isError && <p className="text-red-500">{error.message}</p>}
+      {/* {isError && <p className="text-red-500">{error.message}</p>} */}
     </div>
   );
 };

@@ -7,9 +7,11 @@ import { UseLogin } from "../../../../hooks/auth/hooks";
 import Swal from "sweetalert2";
 import { supabase } from "../../../../config/supabaseClient";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const LoginForm = () => {
-  const [error, setError] = useState(null);
+export const LoginForm = ({ role }) => {
+  // const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const {
     control,
     formState: { errors },
@@ -23,42 +25,23 @@ export const LoginForm = () => {
       password: "",
     },
   });
-  // const { mutate, isLoading, isError, error, data: respData } = useLogin();
 
-  // console.log(`respDataNEW`, respData);
-
-  const onSubmit = async (data) => {
-    try {
-      // const response = await mutate(data);
-      // console.log(`response`, respData);
-
-      let { data: resp, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
-      });
-
-      // if (error) {
-      //   setError(error);
-      //   throw new Error(error.message);
-      // }
-
-      // return resp;
-      if (error) {
-        // Handle the login error here
-        console.log(`Login Error`, error);
-        Swal.fire({
-          toast: true,
-          title: error,
-          icon: "error",
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setError(error);
-      } else {
-        // Login was successful
-        console.log(`Login Success`, data);
-        reset();
+  const handleError = async (error) => {
+    // console.log(`Register Error`, error);
+    Swal.fire({
+      toast: true,
+      title: await error.message,
+      icon: "error",
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+  const handleSuccess = async (data) => {
+    // console.log(`Register Success`);
+    reset();
+    if (role === "ADMIN") {
+      if (data?.data?.user.user_metadata.role === "ADMIN") {
         Swal.fire({
           toast: true,
           title: "Login Success!",
@@ -67,13 +50,52 @@ export const LoginForm = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        setError(null);
-        // You can handle success here (e.g., redirect)
+        setTimeout(() => {
+          navigate("/admin/menu-management");
+        }, 1500);
+      } else {
+        Swal.fire({
+          toast: true,
+          title: "You are not an admin!",
+          icon: "error",
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
+    } else {
+      Swal.fire({
+        toast: true,
+        title: "Login Success!",
+        icon: "success",
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setTimeout(() => {
+        navigate("/admin/menu-management");
+      }, 1500);
+    }
+  };
+
+  const { mutate, isLoading, isError, error, data } = UseLogin(
+    handleError,
+    handleSuccess
+  );
+  // console.log(`respDataNEW`, data);
+
+  const onSubmit = async (data) => {
+    try {
+      await mutate(data);
     } catch (error) {
-      setError(error);
-      console.error("Login Error Form:", error);
-      // Handle any unexpected errors
+      Swal.fire({
+        toast: true,
+        title: await error,
+        icon: "error",
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 

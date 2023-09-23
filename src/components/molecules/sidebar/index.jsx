@@ -1,5 +1,5 @@
 import React from "react";
-import { SidebarMenu } from "../../atoms";
+import { LogoutButton, SidebarMenu } from "../../atoms";
 
 export const Sidebar = ({ menu, role }) => {
   return (
@@ -41,6 +41,7 @@ export const Sidebar = ({ menu, role }) => {
               />
             ))}
           </ul>
+          <LogoutButton />
         </div>
       </aside>
     </div>

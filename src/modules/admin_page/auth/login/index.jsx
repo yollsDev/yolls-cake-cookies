@@ -1,5 +1,3 @@
-// import React from 'react'
-
 import { LinkButton } from "../../../../components";
 import { LoginForm } from "../../../../components/molecules";
 
@@ -13,7 +11,7 @@ export const LoginModule = () => {
         </div>
         <div className="w-full bg-theme-pink p-10 rounded-xl">
           <h2 className="text-center text-3xl font-bold mb-8">Admin Login</h2>
-          <LoginForm />
+          <LoginForm role={"ADMIN"} />
           <div className="text-center">
             <span>Doesnt have an account?</span>
             <LinkButton

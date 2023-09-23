@@ -1,14 +1,12 @@
 import { Controller } from "react-hook-form";
 
-// import React from "react";
-
-export const TextInput = ({
+export const TextAreaInput = ({
   name,
   label,
-  type,
   error,
   control,
   placeholder,
+  rows,
   disabled,
 }) => {
   return (
@@ -23,13 +21,13 @@ export const TextInput = ({
         name={name}
         control={control}
         render={({ field }) => (
-          <input
+          <textarea
             disabled={disabled}
             readOnly={disabled}
-            type={type}
             {...field}
             id={name}
             placeholder={placeholder}
+            rows={rows}
             className="bg-white border border-theme-pink text-gray-900 text-sm rounded-lg focus:ring-theme-pink focus:border-2 focus:border-theme-peach block w-full p-2.5"
           />
         )}
