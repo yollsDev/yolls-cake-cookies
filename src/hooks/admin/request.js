@@ -62,3 +62,28 @@ export const AddMenuRequest = async (menu) => {
     return { error: error.message };
   }
 };
+
+export const EditMenuRequest = async (menuId, updatedMenuData) => {
+  try {
+    const { data, error } = await supabase
+      .from("menuItems")
+      .update({
+        itemName: updatedMenuData.itemName,
+        description: updatedMenuData.description,
+        price: updatedMenuData.price,
+        status: updatedMenuData.status,
+        category: updatedMenuData.category,
+        imageURL: updatedMenuData.imageURL,
+      })
+      .eq("menuItem_id", menuId);
+
+    if (error) {
+      throw new Error("Error editing menu item");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Edit Menu error request:", error.message);
+    return { error: error.message };
+  }
+};

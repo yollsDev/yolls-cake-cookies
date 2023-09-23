@@ -91,6 +91,12 @@ export const MenuForm = ({
                   alt="Menu Item"
                   className="max-w-full mb-4 object-cover rounded-2xl aspect-square"
                 />
+              ) : menuDetail?.imageURL ? (
+                <img
+                  src={`https://dedwkjaekevsyqqfyona.supabase.co/storage/v1/object/public/menu_image/${menuDetail?.imageURL}`}
+                  alt="Menu Item"
+                  className="max-w-full mb-4 object-cover rounded-2xl aspect-square"
+                />
               ) : (
                 <div className="mb-4 ">
                   <div className="bg-gray-300 rounded-xl flex flex-col justify-center items-center mb-3 aspect-square">

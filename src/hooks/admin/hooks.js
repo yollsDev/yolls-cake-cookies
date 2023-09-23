@@ -4,6 +4,7 @@ import {
   MenuDetailRequest,
   AddMenuRequest,
   UploadImageRequest,
+  EditMenuRequest,
 } from "./request";
 
 export const GetMenuData = () =>
@@ -24,7 +25,7 @@ export const PostNewMenu = (menu) =>
     queryFn: async () => await AddMenuRequest(menu),
   });
 
-const UseImageUploadAndFormSubmit = () => {
+export const UseImageUploadAndFormSubmit = () => {
   const queryClient = useQueryClient();
 
   // Define a mutation for uploading an image
@@ -96,4 +97,61 @@ const UseImageUploadAndFormSubmit = () => {
   };
 };
 
-export default UseImageUploadAndFormSubmit;
+export const UseEditMenu = () => {
+  const queryClient = useQueryClient();
+
+  const editMenuMutation = useMutation(async ({ menuId, updatedMenuData }) => {
+    // Simulate editing a menu item; replace this with your actual request logic
+    const data = await EditMenuRequest(menuId, updatedMenuData);
+
+    // Invalidate and refetch relevant queries (if needed)
+    queryClient.invalidateQueries("menuItems");
+
+    return data;
+  });
+
+  const uploadImageMutation = useMutation(async (imageFile) => {
+    // Simulate image upload; replace this with your actual upload logic
+    const imageUrl = await UploadImageRequest(imageFile);
+    return imageUrl;
+  });
+
+  const editMenuItem = async (
+    menuId,
+    imageFile,
+    updatedMenuData,
+    handleSuccess,
+    handleError
+  ) => {
+    try {
+      uploadImageMutation.reset();
+      editMenuMutation.reset();
+      console.log(updatedMenuData);
+
+      let imageUrl = updatedMenuData.imageUrl;
+      if (imageFile) {
+        imageUrl = await uploadImageMutation.mutateAsync(imageFile);
+      }
+
+      updatedMenuData.imageURL = imageUrl;
+
+      // Edit the menu item
+      await editMenuMutation.mutateAsync({ menuId, updatedMenuData });
+
+      console.log("Menu item edited successfully:", editMenuMutation.data);
+      handleSuccess();
+
+      return editMenuMutation.data;
+    } catch (error) {
+      // Handle any errors that occur during the process
+      handleError();
+      console.error("Error editing menu item:", error.message);
+      throw error; // Rethrow the error to be handled by the component
+    }
+  };
+
+  return {
+    editMenuItem,
+    isEditingMenuItem: editMenuMutation.isLoading,
+  };
+};

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { BackButton, DashboardHeader, MenuForm } from "../../../../components";
-import UseImageUploadAndFormSubmit from "../../../../hooks/admin/hooks";
+import { UseImageUploadAndFormSubmit } from "../../../../hooks/admin/hooks";
 import { set, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
