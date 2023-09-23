@@ -10,6 +10,8 @@ import {
   LinkButton,
   IconImagePlaceholder,
 } from "../../../atoms";
+import { useDeleteMenuItem } from "../../../../hooks/admin/hooks";
+import Swal from "sweetalert2";
 
 export const MenuForm = ({
   isDisabled,
@@ -75,6 +77,25 @@ export const MenuForm = ({
       imageURL = null;
     }
   }, [resetForm, reset]);
+
+  const { deleteMenuItem, isDeleting } = useDeleteMenuItem();
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to recover this menu item!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Handle the deletion logic here
+        deleteMenuItem(id); // Call your deleteMenuItem function
+        navigate("/admin/menu-management");
+      }
+    });
+  };
 
   return (
     <div>
@@ -207,7 +228,10 @@ export const MenuForm = ({
                     to={"/admin/menu-edit/" + menuDetail?.menuItem_id}
                   />
 
-                  <button className="text-white bg-theme-error hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1.5 w-24 mb-2">
+                  <button
+                    onClick={() => handleDelete(menuDetail?.menuItem_id)}
+                    className="text-white bg-theme-error hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1.5 w-24 mb-2"
+                  >
                     Delete
                   </button>
                 </div>
