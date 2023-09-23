@@ -5,6 +5,7 @@ import {
   AddMenuRequest,
   UploadImageRequest,
   EditMenuRequest,
+  deleteMenuItemRequest,
 } from "./request";
 
 export const GetMenuData = () =>
@@ -155,3 +156,27 @@ export const UseEditMenu = () => {
     isEditingMenuItem: editMenuMutation.isLoading,
   };
 };
+
+export function useDeleteMenuItem() {
+  const queryClient = useQueryClient();
+
+  const deleteMenuItemMutation = useMutation(deleteMenuItemRequest, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("menuItems");
+    },
+  });
+
+  const deleteMenuItem = async (id) => {
+    try {
+      await deleteMenuItemMutation.mutateAsync(id);
+    } catch (error) {
+      console.error("Error deleting menu item:", error);
+      throw error;
+    }
+  };
+
+  return {
+    deleteMenuItem,
+    isDeleting: deleteMenuItemMutation.isLoading,
+  };
+}

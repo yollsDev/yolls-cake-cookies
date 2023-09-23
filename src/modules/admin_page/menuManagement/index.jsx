@@ -5,12 +5,13 @@ import {
   SearchBar,
   IconPlus,
 } from "../../../components";
-import { GetMenuData } from "../../../hooks/admin/hooks";
+import { GetMenuData, useDeleteMenuItem } from "../../../hooks/admin/hooks";
 import {
   useReactTable,
   getCoreRowModel,
   flexRender,
 } from "@tanstack/react-table";
+import Swal from "sweetalert2";
 
 export const MenuManagementModule = () => {
   const { data } = GetMenuData();
@@ -22,6 +23,24 @@ export const MenuManagementModule = () => {
 
   const start = (currentPage - 1) * itemsPerPage;
   const end = start + itemsPerPage;
+
+  const { deleteMenuItem, isDeleting } = useDeleteMenuItem();
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to recover this menu item!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Handle the deletion logic here
+        deleteMenuItem(id); // Call your deleteMenuItem function
+      }
+    });
+  };
 
   const columns = [
     {
@@ -67,15 +86,14 @@ export const MenuManagementModule = () => {
             }
             text={"Detail"}
           />
-
-          <LinkButton
-            to={"/admin/menu-add"}
-            size={"sm"}
+          <button
             className={
-              "text-white bg-theme-error hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm"
+              "text-white bg-theme-error hover:bg-red-500  focus:ring-4 focus:ring-red-300 font-medium r text-sm focus:outline-none rounded-full text-center items-center px-3 py-1.5 mb-2"
             }
-            text={"Delete"}
-          />
+            onClick={() => handleDelete(props.row.original.menuItem_id)}
+          >
+            Delete
+          </button>
         </div>
       ),
     },

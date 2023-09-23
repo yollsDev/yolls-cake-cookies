@@ -87,3 +87,19 @@ export const EditMenuRequest = async (menuId, updatedMenuData) => {
     return { error: error.message };
   }
 };
+
+export const deleteMenuItemRequest = async (id) => {
+  try {
+    const { data, error } = await supabase
+      .from("menuItems")
+      .delete()
+      .eq("menuItem_id", id);
+
+    console.log("id", id);
+
+    return { data, error };
+  } catch (error) {
+    console.error("Menu Delete error request:", error.message);
+    return { error: error.message };
+  }
+};
