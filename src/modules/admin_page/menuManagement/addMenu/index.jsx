@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { BackButton, DashboardHeader, MenuForm } from "../../../../components";
 import UseImageUploadAndFormSubmit from "../../../../hooks/admin/hooks";
 import { set, useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 export const MenuAddModule = () => {
   // Define selectedImage state
@@ -12,12 +13,26 @@ export const MenuAddModule = () => {
 
   const menuFormRef = useRef();
 
+  const handleSuccess = () => {
+    Swal.fire({
+      icon: "success",
+      title: "Menu Added Successfully",
+      timer: 2000,
+    });
+
+    setResetForm(true);
+  };
+
   const onSubmit = async (data) => {
     try {
       let imageUrl = null;
 
       if (selectedImage) {
-        imageUrl = await uploadImageAndFormSubmit(selectedImage, data);
+        imageUrl = await uploadImageAndFormSubmit(
+          selectedImage,
+          data,
+          handleSuccess
+        );
       }
 
       data.imageURL = imageUrl;

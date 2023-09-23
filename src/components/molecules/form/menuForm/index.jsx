@@ -67,6 +67,12 @@ export const MenuForm = ({
     if (resetForm) {
       reset();
       console.log("Form reset called");
+      setValue("itemName", "");
+      setValue("price", "");
+      setValue("description", "");
+      setValue("category", "");
+      setValue("status", "");
+      imageURL = null;
     }
   }, [resetForm, reset]);
 
@@ -76,7 +82,7 @@ export const MenuForm = ({
         onSubmit={handleSubmit(onSubmit)}
         className="grid md:grid-cols-5 grid-cols-1 md:gap-20 gap-5"
       >
-        {isAdd ? (
+        {isAdd || isEdit ? (
           <div className="w-full col-span-2">
             <div className="bg-cover bg-center bg-no-repeat aspect-square rounded-2xl">
               {imageURL ? (
@@ -112,7 +118,7 @@ export const MenuForm = ({
               className="hidden"
             />
           </div>
-        ) : (isDisabled || isEdit) && menuDetail?.imageURL ? (
+        ) : isDisabled && menuDetail?.imageURL ? (
           <div className="mb-4 col-span-2">
             <div className="bg-cover bg-center bg-no-repeat aspect-square rounded-2xl">
               <img

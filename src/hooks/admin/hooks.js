@@ -50,7 +50,12 @@ const UseImageUploadAndFormSubmit = () => {
 
     return data;
   });
-  const uploadImageAndFormSubmit = async (imageFile, formData) => {
+  const uploadImageAndFormSubmit = async (
+    imageFile,
+    formData,
+    handleSuccess,
+    handleError
+  ) => {
     try {
       uploadImageMutation.reset();
       addMenuMutation.reset();
@@ -70,8 +75,8 @@ const UseImageUploadAndFormSubmit = () => {
       // Invalidate and refetch relevant queries (if needed)
       queryClient.invalidateQueries("menuItems");
 
-      // Handle the success case
       console.log("Menu item added successfully:", addMenuMutation.data);
+      handleSuccess();
 
       return addMenuMutation.data;
     } catch (error) {
