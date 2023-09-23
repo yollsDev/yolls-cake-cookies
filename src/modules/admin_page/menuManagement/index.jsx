@@ -20,6 +20,7 @@ export const MenuManagementModule = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedData, setPaginatedData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const start = (currentPage - 1) * itemsPerPage;
   const end = start + itemsPerPage;
@@ -36,8 +37,7 @@ export const MenuManagementModule = () => {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        // Handle the deletion logic here
-        deleteMenuItem(id); // Call your deleteMenuItem function
+        deleteMenuItem(id);
       }
     });
   };
@@ -66,7 +66,7 @@ export const MenuManagementModule = () => {
       accessorKey: "created_at",
       cell: ({ row }) => {
         const dateAdded = new Date(row.original.created_at);
-        return row.original.created_at ? dateAdded.toLocaleDateString() : "-"; // Format the date
+        return row.original.created_at ? dateAdded.toLocaleDateString() : "-";
       },
     },
     {
@@ -75,7 +75,6 @@ export const MenuManagementModule = () => {
     },
     {
       header: "Actions",
-      // Define the button element here (You can customize the button as needed)
       cell: (props) => (
         <div className="flex gap-5 justify-center">
           <LinkButton
@@ -100,8 +99,12 @@ export const MenuManagementModule = () => {
   ];
 
   useEffect(() => {
-    setPaginatedData(MenuItems.slice(start, end));
-  }, [start, end, MenuItems]);
+    setPaginatedData(
+      MenuItems.slice(start, end).filter((item) =>
+        item.itemName.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [start, end, MenuItems, searchQuery]);
 
   const table = useReactTable({
     data: paginatedData,
@@ -122,7 +125,10 @@ export const MenuManagementModule = () => {
       <DashboardHeader title={"Menu Management"} />
       <div className="px-5 p-8">
         <div className="px-4 flex justify-between">
-          <SearchBar />
+          <SearchBar
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
           <LinkButton
             withIcon={true}
             to={"/admin/menu-add"}
@@ -133,7 +139,7 @@ export const MenuManagementModule = () => {
             icon={<IconPlus size={20} />}
           />
         </div>
-        <hr className=" h-0.5 my-8 bg-theme-brown border-0" />
+        <hr className="h-0.5 my-8 bg-theme-brown border-0" />
         <div className="px-4 ">
           <table className="w-full text-left text-sm sm:text-md bg-white shadow-lg rounded-xl">
             <thead className="font-bold">
@@ -168,7 +174,6 @@ export const MenuManagementModule = () => {
               ))}
             </tbody>
           </table>
-          {/* Pagination Controls */}
           <div className="flex items-center gap-5 h-8 text-sm mt-5 justify-center">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
@@ -188,8 +193,6 @@ export const MenuManagementModule = () => {
               Next
             </button>
           </div>
-
-          <div></div>
         </div>
       </div>
     </div>
