@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   DashboardHeader,
   LinkButton,
@@ -14,14 +14,20 @@ import {
 
 export const MenuManagementModule = () => {
   const { data } = GetMenuData();
-
   const MenuItems = data && data.menuItems ? data.menuItems : [];
+  const itemsPerPage = 10;
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [paginatedData, setPaginatedData] = useState([]);
+
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
 
   const columns = [
     {
       header: "No.",
       cell: ({ row }) => {
-        return row.index + 1;
+        return row.index + 1 + start;
       },
     },
     {
@@ -74,11 +80,24 @@ export const MenuManagementModule = () => {
       ),
     },
   ];
+
+  useEffect(() => {
+    setPaginatedData(MenuItems.slice(start, end));
+  }, [start, end, MenuItems]);
+
   const table = useReactTable({
-    data: MenuItems,
+    data: paginatedData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const totalPages = Math.ceil(MenuItems.length / itemsPerPage);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
 
   return (
     <div>
@@ -116,7 +135,6 @@ export const MenuManagementModule = () => {
                 </tr>
               ))}
             </thead>
-
             <tbody>
               {table.getRowModel().rows.map((row) => (
                 <tr key={row.id} className="hover:bg-gray-50 border-b">
@@ -132,6 +150,28 @@ export const MenuManagementModule = () => {
               ))}
             </tbody>
           </table>
+          {/* Pagination Controls */}
+          <div className="flex items-center gap-5 h-8 text-sm mt-5 justify-center">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700"
+            >
+              Previous
+            </button>
+            <div>
+              Page {currentPage} of {totalPages}
+            </div>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-100 hover:text-gray-700"
+            >
+              Next
+            </button>
+          </div>
+
+          <div></div>
         </div>
       </div>
     </div>
