@@ -9,7 +9,7 @@ import {
   TestimonyPage,
   CareerPage,
 } from "./pages/landing_page";
-import { Auth, Guest, Admin } from "./layouts";
+import { Auth, Guest, Admin, Member } from "./layouts";
 import {
   LoginPage,
   RegisterPage,
@@ -20,7 +20,13 @@ import {
   MenuEditPage,
   MenuAddPage,
 } from "./pages/admin_page";
+import {
+  LoginMemberPage,
+  SignUpMemberPage,
+  MyPointsPage,
+} from "./pages/member_page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 const router = createBrowserRouter([
   {
     element: <Guest />,
@@ -62,6 +68,14 @@ const router = createBrowserRouter([
         path: "/auth/admin/signup",
         element: <RegisterPage />,
       },
+      {
+        path: "/auth/member/login",
+        element: <LoginMemberPage />,
+      },
+      {
+        path: "/auth/member/signup",
+        element: <SignUpMemberPage />,
+      },
     ],
   },
   {
@@ -90,6 +104,23 @@ const router = createBrowserRouter([
       {
         path: "/admin/menu-add",
         element: <MenuAddPage />,
+      },
+    ],
+  },
+  {
+    element: <Member />,
+    children: [
+      {
+        path: "/member/my-points",
+        element: <MyPointsPage />,
+      },
+      {
+        path: "/member/order-history",
+        element: <PaymentManagementPage />,
+      },
+      {
+        path: "/member/profile",
+        element: <MemberDataPage />,
       },
     ],
   },

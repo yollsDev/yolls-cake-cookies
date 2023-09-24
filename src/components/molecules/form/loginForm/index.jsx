@@ -64,17 +64,29 @@ export const LoginForm = ({ role }) => {
         });
       }
     } else {
-      Swal.fire({
-        toast: true,
-        title: "Login Success!",
-        icon: "success",
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      setTimeout(() => {
-        navigate("/admin/menu-management");
-      }, 1500);
+      if (data?.data?.user.user_metadata.role === "MEMBER") {
+        Swal.fire({
+          toast: true,
+          title: "Login Success!",
+          icon: "success",
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          navigate("/member/my-points");
+        }, 1500);
+      } else {
+        Swal.fire({
+          toast: true,
+          title: "You are not a Member!",
+          text: "Please register as a member",
+          icon: "error",
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     }
   };
 
