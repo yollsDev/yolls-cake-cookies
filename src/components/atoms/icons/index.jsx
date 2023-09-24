@@ -6,3 +6,5 @@ export * from "./icon-plus";
 export * from "./icon-backArrow";
 export * from "./icon-check";
 export * from "./icon-imagePlaceholder";
+export * from "./icon-gift";
+export * from "./icon-history";

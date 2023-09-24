@@ -1,8 +1,8 @@
 import {
   Sidebar,
   Footer,
-  IconMenu,
-  IconPayment,
+  IconGift,
+  IconHistory,
   IconPerson,
 } from "../components";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -17,12 +17,12 @@ export const Member = () => {
     {
       menu: "My Points",
       path: "/member/my-points",
-      icon: <IconMenu size={25} />,
+      icon: <IconGift size={25} />,
     },
     {
       menu: "Order History",
       path: "/member/order-history",
-      icon: <IconPayment size={25} />,
+      icon: <IconHistory size={25} />,
     },
     {
       menu: "Profile",
