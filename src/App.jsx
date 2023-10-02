@@ -19,13 +19,18 @@ import {
   MenuDetailPage,
   MenuEditPage,
   MenuAddPage,
+  MemberDetailPage,
 } from "./pages/admin_page";
 import {
   LoginMemberPage,
   SignUpMemberPage,
   MyPointsPage,
+  OrderHistoryPage,
+  ProfilePage,
 } from "./pages/member_page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { OrderDetailPage } from "./pages/member_page/OrderDetailPage";
+import { ProfileEditPage } from "./pages/member_page/ProfileEditPage";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +99,10 @@ const router = createBrowserRouter([
         element: <MemberDataPage />,
       },
       {
+        path: "/admin/member-detail/:id",
+        element: <MemberDetailPage />,
+      },
+      {
         path: "/admin/menu-detail/:id",
         element: <MenuDetailPage />,
       },
@@ -116,11 +125,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/member/order-history",
-        element: <PaymentManagementPage />,
+        element: <OrderHistoryPage />,
       },
       {
         path: "/member/profile",
-        element: <MemberDataPage />,
+        element: <ProfilePage />,
+      },
+      {
+        path: "/member/profile-edit/:id",
+        element: <ProfileEditPage />,
+      },
+      {
+        path: "/member/order-detail/:id",
+        element: <OrderDetailPage />,
       },
     ],
   },

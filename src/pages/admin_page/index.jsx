@@ -6,3 +6,4 @@ export * from "./MemberDataPage";
 export * from "./MenuDetailPage";
 export * from "./MenuEditPage";
 export * from "./MenuAddPage";
+export * from "./MemberDetailPage";

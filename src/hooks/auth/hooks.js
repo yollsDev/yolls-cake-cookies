@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { loginRequest, signUpRequest, getUser } from "./request";
+import { loginRequest, signUpRequest, getUser, getUserByID } from "./request";
 import { useEffect, useRef } from "react";
 import { get } from "react-hook-form";
 
@@ -37,5 +37,12 @@ export const UseUser = () => {
     queryKey: ["user"],
     queryFn: () => getUser(),
     retry: false,
+  });
+};
+
+export const useUserByID = (id) => {
+  return useQuery({
+    queryKey: ["userByID"],
+    queryFn: async () => await getUserByID(id),
   });
 };

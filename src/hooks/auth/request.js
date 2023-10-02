@@ -17,6 +17,21 @@ export const getUser = async () => {
   }
 };
 
+export const getUserByID = async (id) => {
+  try {
+    let { data: users, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("auth_id", id)
+      .single();
+
+    return { users, error };
+  } catch (error) {
+    console.error("getUserByID Request error:", error.message);
+    return { error: error.message };
+  }
+};
+
 export const signUpRequest = async (params) => {
   try {
     const { data, error } = await supabase.auth.signUp({

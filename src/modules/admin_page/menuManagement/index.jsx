@@ -15,7 +15,9 @@ import Swal from "sweetalert2";
 
 export const MenuManagementModule = () => {
   const { data } = GetMenuData();
-  const MenuItems = data && data.menuItems ? data.menuItems : [];
+  const [MenuItems, setMenuItems] = useState(
+    data && data.menuItems ? data.menuItems : []
+  );
   const itemsPerPage = 10;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +26,11 @@ export const MenuManagementModule = () => {
 
   const start = (currentPage - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-
+  useEffect(() => {
+    {
+      data && data.menuItems ? setMenuItems(data.menuItems) : [];
+    }
+  }, [data, MenuItems]);
   const { deleteMenuItem, isDeleting } = useDeleteMenuItem();
 
   const handleDelete = (id) => {

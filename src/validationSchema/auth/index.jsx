@@ -20,3 +20,9 @@ export const registerValidationSchema = Yup.object().shape({
     "Password must match"
   ),
 });
+
+export const profileValidation = Yup.object().shape({
+  name: Yup.string().required("Name is required").min(3, "Name is too short"),
+  city: Yup.string().required("City is required").min(3, "City is too short"),
+  birthDate: Yup.string().required("Birthdate is required"),
+});

@@ -14,7 +14,10 @@ export const LogoutButton = ({ role }) => {
     }
   };
   return (
-    <div onClick={handleLogoutClick} className="cursor-pointer">
+    <div
+      onClick={handleLogoutClick}
+      className="cursor-pointer focus:outline-none rounded-full text-center inline-flex items-center gap-4 bg-red-400 text-white p-2 w-24 justify-center mt-5"
+    >
       Logout
     </div>
   );

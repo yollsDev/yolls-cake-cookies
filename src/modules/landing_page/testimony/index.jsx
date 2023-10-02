@@ -48,6 +48,26 @@ export const TestimonyModule = () => {
             <p className="font-bold text-theme-red">Bambang</p>
             <p>Finance Manager, Customer</p> */}
           </div>
+          <div className="bg-theme-peach rounded-lg p-5 w-1/4 shadow-lg">
+            <img
+              src="/testimoni/testimoni5.jpg"
+              alt=""
+              className="w-full md:w-1/2 mx-auto"
+            />
+            {/* <hr className="h-px my-8 bg-[#868282] border-0" />
+            <p className="font-bold text-theme-red">Bambang</p>
+            <p>Finance Manager, Customer</p> */}
+          </div>
+          <div className="bg-theme-peach rounded-lg p-5 w-1/4 shadow-lg">
+            <img
+              src="/testimoni/testimoni6.jpg"
+              alt=""
+              className="w-full md:w-1/2 mx-auto"
+            />
+            {/* <hr className="h-px my-8 bg-[#868282] border-0" />
+            <p className="font-bold text-theme-red">Bambang</p>
+            <p>Finance Manager, Customer</p> */}
+          </div>
         </div>
       </section>
     </div>

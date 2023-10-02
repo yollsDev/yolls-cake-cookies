@@ -41,7 +41,11 @@ export const Sidebar = ({ menu, role }) => {
               />
             ))}
           </ul>
-          <LogoutButton />
+          {role === "MEMBER" ? (
+            <LogoutButton role={"MEMBER"} />
+          ) : (
+            <LogoutButton />
+          )}
         </div>
       </aside>
     </div>
