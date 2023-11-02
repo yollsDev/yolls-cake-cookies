@@ -6,6 +6,7 @@ import { orderValidationSchema } from "../../../validationSchema";
 
 export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
   const [isMember, setIsMember] = useState(false);
+  const [useMemberPoint, setUseMemberPoint] = useState(false);
 
   const {
     control,
@@ -21,8 +22,17 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
 
   const handleCheckboxChange = (event) => {
     setIsMember(event.target.checked);
-    console.log("isMember", isMember);
   };
+
+  const handleUseMemberPointToggle = (event) => {
+    setUseMemberPoint(event.target.checked);
+  };
+
+  let totalPrice = 0;
+  selectedMenu.forEach((item) => {
+    const itemPrice = item.price * item.quantity;
+    totalPrice += itemPrice;
+  });
 
   return (
     <div className="w-full h-full min-h-screen">
@@ -108,6 +118,7 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
                     type="checkbox"
                     value="useMemberPoint"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 outline-none"
+                    onChange={handleUseMemberPointToggle}
                   />
                   <label
                     htmlFor="useMemberPoint"
@@ -124,6 +135,10 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
         <div>
           {selectedMenu &&
             selectedMenu?.map((item, index) => {
+              const formattedPrice = new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              }).format(item.price * item.quantity);
               return (
                 <div className="flex gap-5" key={index}>
                   <div className="w-1/3">
@@ -142,7 +157,7 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
                       </div>
                     )}
                   </div>
-                  <div className="flex justify-between w-full">
+                  <div className="flex justify-between w-full font-bold">
                     <div className="">
                       <p>{item.itemName}</p>
                       <div className="flex gap-2 mt-2 text-xs">
@@ -163,20 +178,50 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
                         </button>
                       </div>
                     </div>
-                    <p>{item.price}</p>
+                    <p>{formattedPrice}</p>
                   </div>
                 </div>
               );
             })}
         </div>
-        <hr className="h-0.5 my-4 bg-theme-brown border-0" />
-        <div>
-          <h1>Sub Total and Member Point Discount</h1>
-        </div>
-        <hr className="h-0.5 my-4 bg-theme-brown border-0" />
-        <div>
-          <h1>Total</h1>
-        </div>
+        {useMemberPoint ? (
+          <div className="w-full">
+            <hr className="h-0.5 my-4 bg-theme-brown border-0" />
+            <div className="grid grid-cols-2 text-right w-full gap-3">
+              <p>SubTotal </p>
+              <p>
+                {totalPrice.toLocaleString("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                })}
+              </p>
+              <p>Member Point Discount</p>
+            </div>
+            <hr className="h-0.5 my-4 bg-theme-brown border-0" />
+            <div className="grid grid-cols-2 text-right gap-3 font-bold">
+              <p>Total</p>
+              <p>
+                {totalPrice.toLocaleString("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                })}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="w-full font-bold">
+            <hr className="h-0.5 my-4 bg-theme-brown border-0" />
+            <div className="grid grid-cols-2 text-right gap-3 font-bold">
+              <p>Total</p>
+              <p>
+                {totalPrice.toLocaleString("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                })}
+              </p>
+            </div>
+          </div>
+        )}
         <div className="w-full my-5">
           <button className="text-white bg-theme-red hover:bg-red-950 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full w-full text-sm p-1.5 mb-2">
             Order
