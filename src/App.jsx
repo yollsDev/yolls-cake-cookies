@@ -9,7 +9,7 @@ import {
   TestimonyPage,
   CareerPage,
 } from "./pages/landing_page";
-import { Auth, Guest, Admin, Member } from "./layouts";
+import { Auth, Guest, Admin, Member, Order } from "./layouts";
 import {
   LoginPage,
   RegisterPage,
@@ -31,6 +31,7 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { OrderDetailPage } from "./pages/member_page/OrderDetailPage";
 import { ProfileEditPage } from "./pages/member_page/ProfileEditPage";
+import { OrderPage } from "./pages/order_page";
 
 const router = createBrowserRouter([
   {
@@ -138,6 +139,19 @@ const router = createBrowserRouter([
       {
         path: "/member/order-detail/:id",
         element: <OrderDetailPage />,
+      },
+    ],
+  },
+  {
+    element: <Order />,
+    children: [
+      {
+        path: "/order/menu",
+        element: <OrderPage />,
+      },
+      {
+        path: "/order/invoice",
+        element: <OrderHistoryPage />,
       },
     ],
   },

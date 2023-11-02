@@ -57,7 +57,7 @@ export const TopNavbar = () => {
       }  fixed w-full z-20 top-0 left-0 `}
     >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="https://flowbite.com/" className="flex items-center">
+        <a href="" className="flex items-center">
           <img src="./logo.svg" className="mr-3 h-12" alt="Logo" />
         </a>
         <div className="flex md:none">
