@@ -171,7 +171,10 @@ export const OrderModule = () => {
                     </div>
 
                     <div>
-                      {isMenuSelected[index] ? (
+                      {selectedMenu.find(
+                        (selectedItem) =>
+                          selectedItem.itemName === item.itemName
+                      ) ? (
                         <div className="flex justify-between mt-4">
                           <button
                             className="px-5 py-1.5 bg-white rounded-md"

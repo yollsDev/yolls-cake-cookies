@@ -3,6 +3,8 @@ import { IconImagePlaceholder, TextInput } from "../../atoms";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { orderValidationSchema } from "../../../validationSchema";
+import { UseLogin } from "../../../hooks/auth/hooks";
+import Swal from "sweetalert2";
 
 export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
   const [isMember, setIsMember] = useState(false);
@@ -33,6 +35,62 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
     const itemPrice = item.price * item.quantity;
     totalPrice += itemPrice;
   });
+
+  const handleError = async (error) => {
+    // console.log(`Register Error`, error);
+    Swal.fire({
+      toast: true,
+      title: await error.message,
+      icon: "error",
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+  const handleSuccess = async (data) => {
+    // console.log(`Register Success`);
+    reset();
+    if (data?.data?.user.user_metadata.role === "MEMBER") {
+      Swal.fire({
+        toast: true,
+        title: "Login Success!",
+        icon: "success",
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        toast: true,
+        title: "You are not a Member!",
+        text: "Please register as a member",
+        icon: "error",
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
+
+  const { mutate, isLoading, isError, error, data } = UseLogin(
+    handleError,
+    handleSuccess
+  );
+
+  const onVerifyMembership = async (data) => {
+    try {
+      await mutate(data);
+    } catch (error) {
+      Swal.fire({
+        toast: true,
+        title: await error,
+        icon: "error",
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
 
   return (
     <div className="w-full h-full min-h-screen">
@@ -96,7 +154,7 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
                 {" "}
                 <TextInput
                   type="email"
-                  label="Email Number"
+                  label="Email"
                   name="emailMember"
                   control={control}
                   error={errors.category?.emailMember}
@@ -112,6 +170,15 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
                   placeholder={"Password..."}
                   // disabled={isDisabled}
                 />
+                <div className="flex justify-end">
+                  <button
+                    type="submit"
+                    className="text-white bg-theme-red focus:ring-theme-peach focus:ring-2 font-medium rounded-full text-sm px-5 py-1.5 text-center mb-2 inline-block  hover:bg-white hover:text-theme-red hover:border-theme-red border-2 border-theme-red"
+                  >
+                    Verify Membership
+                    {/* {isLoading ? "Logging In..." : "Login"} */}
+                  </button>
+                </div>
                 <div className="flex items-center mb-4 ml-2">
                   <input
                     id="useMemberPoint"
