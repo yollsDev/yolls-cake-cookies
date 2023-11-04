@@ -14,6 +14,8 @@ import {
   useInsertInvoice,
   useInsertOrder,
   useInsertOrderItem,
+  useInsertPointTransaction,
+  useUpdatePoint,
 } from "../../../hooks/order/hooks";
 
 export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
@@ -50,6 +52,10 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
     setUseMemberPoint(event.target.checked);
     console.log(member);
   };
+
+  useEffect(() => {
+    !isMember && setUseMemberPoint(false);
+  }, [isMember]);
 
   let totalPrice = 0;
   selectedMenu.forEach((item) => {
@@ -108,29 +114,15 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
     }
   };
 
-  const {
-    mutate: insertOrderMutate,
-    isLoading: insertOrderIsLoading,
-    isError: insertOrderIsError,
-    error: insertOrderError,
-    data: insertOrderResp,
-  } = useInsertOrder();
+  const { mutate: insertOrderMutate } = useInsertOrder();
 
-  const {
-    mutate: insertOrderItemMutate,
-    isLoading: insertOrderItemIsLoading,
-    isError: insertOrderItemIsError,
-    error: insertOrderItemError,
-    data: insertOrderItemResp,
-  } = useInsertOrderItem();
+  const { mutate: insertOrderItemMutate } = useInsertOrderItem();
 
-  const {
-    mutate: insertInvoiceMutate,
-    isLoading: insertInvoiceIsLoading,
-    isError: insertInvoiceIsError,
-    error: insertInvoiceError,
-    data: insertInvoiceResp,
-  } = useInsertInvoice();
+  const { mutate: insertInvoiceMutate } = useInsertInvoice();
+
+  const { mutate: insertPointTransactionMutate } = useInsertPointTransaction();
+
+  const { mutate: updatePointMutate } = useUpdatePoint();
 
   const onPlaceOrder = async (data) => {
     const orderData = {
@@ -167,6 +159,40 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
             paymentStatus: "UNCONFIRMED",
           };
           insertInvoiceMutate(invoiceData);
+
+          if (totalPrice > 5000 && isMember) {
+            const pointTransactionData = {
+              member_id: member?.member?.member_id,
+              pointsChange: (totalPrice / 5000) * 100,
+              type: "EARN",
+            };
+            insertPointTransactionMutate(pointTransactionData);
+          }
+
+          if (useMemberPoint) {
+            const pointTransactionData = {
+              member_id: member?.member?.member_id,
+              pointsChange: member?.member?.points,
+              type: "REDEEM",
+            };
+            insertPointTransactionMutate(pointTransactionData);
+          }
+
+          if (isMember) {
+            const pointData = {
+              points: (totalPrice / 5000) * 100,
+              member_id: member?.member?.member_id,
+            };
+            updatePointMutate(pointData);
+          }
+          Swal.fire({
+            toast: true,
+            title: "Order Success!",
+            icon: "success",
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         },
       });
     } catch (error) {

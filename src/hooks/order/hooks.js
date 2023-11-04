@@ -4,6 +4,8 @@ import {
   addInvoiceRequest,
   addOrderItemRequest,
   addOrderRequest,
+  pointTransactionRequest,
+  updatePointRequest,
 } from "./request";
 
 export const GetCategoryData = () =>
@@ -30,5 +32,19 @@ export const useInsertInvoice = () => {
   return useMutation({
     mutationKey: ["insert-invoice"],
     mutationFn: async (data) => await addInvoiceRequest(data),
+  });
+};
+
+export const useInsertPointTransaction = () => {
+  return useMutation({
+    mutationKey: ["insert-point-transaction"],
+    mutationFn: async (data) => await pointTransactionRequest(data),
+  });
+};
+
+export const useUpdatePoint = () => {
+  return useMutation({
+    mutationKey: ["update-point"],
+    mutationFn: async (data) => await updatePointRequest(data),
   });
 };

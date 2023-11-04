@@ -17,6 +17,8 @@ export const addOrderRequest = async (data) => {
       user_id: data.user_id,
       member_id: data.member_id,
       redeemedPoints: data.redeemPoints,
+      name: data.name,
+      tableNumber: data.tableNumber,
     };
 
     let { data: insertData, error } = await supabase
@@ -67,6 +69,42 @@ export const addInvoiceRequest = async (data) => {
     return { invoice, error };
   } catch (error) {
     console.error("Invoice Request error request:", error.message);
+    return { error: error.message };
+  }
+};
+
+export const pointTransactionRequest = async (data) => {
+  try {
+    const pointTransactionData = {
+      member_id: data.member_id,
+      pointsChange: data.pointsChange,
+      type: data.type,
+    };
+
+    let { data: pointTransaction, error } = await supabase
+      .from("pointTransaction")
+      .insert([pointTransactionData])
+      .select();
+
+    return { pointTransaction, error };
+  } catch (error) {
+    console.error("Point Transaction Request error request:", error.message);
+    return { error: error.message };
+  }
+};
+
+export const updatePointRequest = async (data) => {
+  try {
+    const { data: member, error } = await supabase
+      .from("members")
+      .update({
+        points: data.points,
+      })
+      .eq("member_id", data.member_id);
+
+    return { member, error };
+  } catch (error) {
+    console.error("Point Transaction Request error request:", error.message);
     return { error: error.message };
   }
 };
