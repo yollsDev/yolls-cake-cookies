@@ -10,3 +10,63 @@ export const CategoryRequest = async () => {
     return { error: error.message };
   }
 };
+
+export const addOrderRequest = async (data) => {
+  try {
+    const orderData = {
+      user_id: data.user_id,
+      member_id: data.member_id,
+      redeemedPoints: data.redeemPoints,
+    };
+
+    let { data: insertData, error } = await supabase
+      .from("orders")
+      .insert([orderData])
+      .select();
+
+    return { data: insertData, error };
+  } catch (error) {
+    console.error("Order Request error request:", error.message);
+    return { error: error.message };
+  }
+};
+
+export const addOrderItemRequest = async (data) => {
+  try {
+    const orderItemData = {
+      order_id: data.order_id,
+      menuItem_id: data.menuItem_id,
+      quantity: data.quantity,
+      subtotal: data.subtotal,
+    };
+
+    let { data: orderItem, error } = await supabase
+      .from("orderItem")
+      .insert([orderItemData]);
+
+    return { orderItem, error };
+  } catch (error) {
+    console.error("Order Request error request:", error.message);
+    return { error: error.message };
+  }
+};
+
+export const addInvoiceRequest = async (data) => {
+  try {
+    const invoiceData = {
+      order_id: data.order_id,
+      totalAmount: data.totalAmount,
+      paymentStatus: data.paymentStatus,
+    };
+
+    let { data: invoice, error } = await supabase
+      .from("invoices")
+      .insert([invoiceData])
+      .select();
+
+    return { invoice, error };
+  } catch (error) {
+    console.error("Invoice Request error request:", error.message);
+    return { error: error.message };
+  }
+};

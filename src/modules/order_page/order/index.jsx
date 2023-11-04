@@ -45,6 +45,7 @@ export const OrderModule = () => {
         price: item.price,
         imageURL: item.imageURL,
         quantity: 1,
+        menuItem_id: item.menuItem_id,
       };
       updatedSelectedMenu.push(selectedItem);
     }
