@@ -193,6 +193,8 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
             showConfirmButton: false,
             timer: 1500,
           });
+
+          localStorage.removeItem("selectedMenu");
         },
       });
     } catch (error) {
