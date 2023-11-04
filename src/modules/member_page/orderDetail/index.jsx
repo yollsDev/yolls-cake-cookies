@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import {
   useInvoice,
   useOrder,
+  useOrderById,
   useOrderItem,
 } from "../../../hooks/member/orderHistory/hooks";
 import { BackButton, DashboardHeader } from "../../../components";
@@ -17,7 +18,7 @@ export const OrderDetailModule = () => {
   const { id } = useParams();
   const { data, isLoading, isError, error } = useOrderItem(id);
   const { data: invoiceData } = useInvoice(id);
-  const { data: orderData } = useOrder(id);
+  const { data: orderData } = useOrderById(id);
   console.log(orderData);
   const orderDate = new Date(orderData?.data[0].orderDate).toLocaleDateString();
 

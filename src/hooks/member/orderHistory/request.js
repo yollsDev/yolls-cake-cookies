@@ -28,6 +28,20 @@ export const getOrder = async (member_id) => {
   }
 };
 
+export const getOrderbyId = async (order_id) => {
+  try {
+    let { data, error } = await supabase
+      .from("orders")
+      .select("*")
+      .eq("order_id", order_id);
+
+    return { data, error };
+  } catch (error) {
+    console.error("Order Request error request:", error.message);
+    return { error: error.message };
+  }
+};
+
 export const getOrderItem = async (order_id) => {
   try {
     let { data, error } = await supabase
