@@ -28,12 +28,12 @@ export const getOrder = async (member_id) => {
   }
 };
 
-export const getOrderbyId = async (order_id) => {
+export const getOrderbyId = async (id) => {
   try {
     let { data, error } = await supabase
       .from("orders")
       .select("*")
-      .eq("order_id", order_id);
+      .eq("order_id", id);
 
     return { data, error };
   } catch (error) {

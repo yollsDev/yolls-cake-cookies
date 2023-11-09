@@ -8,7 +8,6 @@ import {
 } from "../../../validationSchema";
 import { UseLogin } from "../../../hooks/auth/hooks";
 import Swal from "sweetalert2";
-import { useMemberByID } from "../../../hooks/admin/member-management/hooks";
 import { supabase } from "../../../config/supabaseClient";
 import {
   useInsertInvoice,
@@ -17,12 +16,16 @@ import {
   useInsertPointTransaction,
   useUpdatePoint,
 } from "../../../hooks/order/hooks";
+import { useNavigate } from "react-router-dom";
+import { BsCart2 } from "react-icons/bs";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
 export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
   const [isMember, setIsMember] = useState(false);
   const [useMemberPoint, setUseMemberPoint] = useState(false);
   const [verifyMessage, setVerifyMessage] = useState("");
   const [member, setMember] = useState(null);
+  const navigate = useNavigate();
 
   const {
     control,
@@ -186,17 +189,22 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
             updatePointMutate(pointData);
           }
           Swal.fire({
-            toast: true,
-            title: "Order Success!",
+            html:
+              "<p class='font-bold text-sm'>ORDER ID<p>" +
+              `<p class='font-bold text-3xl my-2'>#${data?.data[0]?.order_id}</p>` +
+              "<p class='font-bold text-xl my-2'>Order Success!<p>" +
+              "<p>Please wait, your food will be delivered to your tabel!<p>",
             icon: "success",
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 1500,
+            confirmButtonText: "See your receipt",
+            confirmButtonColor: "#78002C",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate(`/order/invoice/${data?.data[0]?.order_id}`);
+            }
           });
-
-          localStorage.removeItem("selectedMenu");
         },
       });
+      localStorage.removeItem("selectedMenu");
     } catch (error) {
       Swal.fire({
         toast: true,
@@ -210,23 +218,10 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
   };
 
   return (
-    <div className="w-full h-full min-h-screen">
-      <button
-        data-drawer-target="logo-sidebar"
-        data-drawer-toggle="logo-sidebar"
-        aria-controls="logo-sidebar"
-        type="button"
-        className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden "
-      >
-        <span className="sr-only">Open sidebar</span>
-        <a href="/" className="flex items-center">
-          <img src="/logo.svg" className="mr-3 h-12" alt="Logo" />
-        </a>
-      </button>
-
+    <div className={`w-full h-screen min-h-screen fixed z-20 bottom-0`}>
       <aside
         id="logo-sidebar"
-        className="top-0 right-0 w-full transition-transform -translate-x-full sm:translate-x-0 bg-theme-pink px-5 pt-3 pb-6 h-full  min-h-screen"
+        className={` w-full transition-transform sm:translate-x-0 bg-theme-pink px-5 pt-24 md:pt-5 h-screen fixed overflow-y-scroll  min-h-screen `}
         aria-label="Sidebar"
       >
         <h1 className="text-2xl font-bold">My Order</h1>
@@ -260,15 +255,17 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
                 placeholder={"john.doe@#gmail.com"}
                 // disabled={isDisabled}
               />
+
               <TextInput
                 type="password"
                 label="Password"
                 name="password"
                 control={control}
-                error={errors.email?.message}
+                error={errors.password?.message}
                 placeholder={"Password..."}
                 // disabled={isDisabled}
               />
+
               <div className="flex justify-end">
                 <button
                   type="submit"
@@ -310,21 +307,21 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
             label="Table Number"
             name="tableNumber"
             control={orderControl}
-            error={errors.tableNumber?.message}
+            error={orderErrors.tableNumber?.message}
             placeholder={"Ex. 1, 3,"}
-            // disabled={isDisabled}
           />
+
           <TextInput
             type="text"
             label="Name"
             name="name"
             control={orderControl}
-            error={errors.name?.message}
+            error={orderErrors.name?.message}
             placeholder={"Bambang Martono..."}
-            // disabled={isDisabled}
           />
+
           <hr className="h-0.5 my-4 bg-theme-brown border-0" />
-          <div>
+          <div className="">
             {selectedMenu &&
               selectedMenu?.map((item, index) => {
                 const formattedPrice = new Intl.NumberFormat("id-ID", {
@@ -425,7 +422,7 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
               </div>
             </div>
           )}
-          <div className="w-full my-5">
+          <div className="w-full my-5 pb-24">
             <button
               type="submit"
               className="text-white bg-theme-red hover:bg-red-950 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full w-full text-sm p-1.5 mb-2"

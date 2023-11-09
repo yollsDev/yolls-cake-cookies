@@ -108,3 +108,17 @@ export const updatePointRequest = async (data) => {
     return { error: error.message };
   }
 };
+
+export const MenuByCategoryRequest = async (category) => {
+  try {
+    let { data: menuItems, error } = await supabase
+      .from("menuItems")
+      .select("*")
+      .ilike("category", category);
+
+    return { menuItems, error };
+  } catch (error) {
+    console.error("Menu Request error request:", error.message);
+    return { error: error.message };
+  }
+};

@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   CategoryRequest,
+  MenuByCategoryRequest,
   addInvoiceRequest,
   addOrderItemRequest,
   addOrderRequest,
@@ -48,3 +49,9 @@ export const useUpdatePoint = () => {
     mutationFn: async (data) => await updatePointRequest(data),
   });
 };
+
+export const useMenuByCategory = (category) =>
+  useQuery({
+    queryKey: ["get-menu-by-category", category],
+    queryFn: async () => await MenuByCategoryRequest(category),
+  });

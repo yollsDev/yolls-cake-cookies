@@ -32,6 +32,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { OrderDetailPage } from "./pages/member_page/OrderDetailPage";
 import { ProfileEditPage } from "./pages/member_page/ProfileEditPage";
 import { OrderPage } from "./pages/order_page";
+import { ReceiptPage } from "./pages/order_page/ReceiptPage";
 
 const router = createBrowserRouter([
   {
@@ -150,8 +151,8 @@ const router = createBrowserRouter([
         element: <OrderPage />,
       },
       {
-        path: "/order/invoice",
-        element: <OrderHistoryPage />,
+        path: "/order/invoice/:id",
+        element: <ReceiptPage />,
       },
     ],
   },

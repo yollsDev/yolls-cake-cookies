@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { GetCategoryData } from "../../../hooks/order/hooks";
+import { GetCategoryData, useMenuByCategory } from "../../../hooks/order/hooks";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -12,10 +12,13 @@ import {
   MenuCard,
   OrderSidebar,
 } from "../../../components";
+import { MenuByCategoryRequest } from "../../../hooks/order/request";
+import { BsCart2 } from "react-icons/bs";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
 export const OrderModule = () => {
   const { data } = GetCategoryData();
-  const { data: menu } = GetMenuData();
+  const { data: allMenu } = GetMenuData();
   const formatCategoryName = (name) => {
     return name
       .split("_")
@@ -23,11 +26,19 @@ export const OrderModule = () => {
       .join(" ");
   };
   const sliderRef = useRef();
-
+  const [activeCategory, setActiveCategory] = useState(null);
   const [selectedMenu, setSelectedMenu] = useState([]);
   const [isMenuSelected, setIsMenuSelected] = useState(
     new Array(selectedMenu?.menuItems?.length).fill(false)
   );
+
+  const [menu, setMenu] = useState();
+
+  useEffect(() => {
+    if (allMenu) {
+      setMenu(allMenu);
+    }
+  }, [allMenu]);
 
   const addToCart = (item, index) => {
     const updatedSelectedMenu = [...selectedMenu];
@@ -96,10 +107,29 @@ export const OrderModule = () => {
     }
   }, [menu]);
 
+  const handleFilterClick = async (category) => {
+    // Fetch menu items for the selected category
+    const { menuItems, error } = await MenuByCategoryRequest(category);
+
+    if (!error) {
+      setMenu({ menuItems });
+      // Handle the fetched menu items (e.g., set them in your component state)
+      console.log("Fetched menu items for category:", category, menuItems);
+    } else {
+      // Handle the error
+      console.error("Error fetching menu items:", error);
+    }
+  };
+
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
+
   return (
-    <div className="flex pt-16 mt-2 w-full h-full">
-      <div className="h-full w-2/3 bg-cover bg-top min-h-screen">
-        <div className="p-8 w-full">
+    <div className=" flex pt-16 mt-2 w-full h-full fixed">
+      <div className="h-full w-full md:w-2/3 bg-cover bg-top min-h-screen  overflow-y-auto">
+        <div className="p-3 md:p-8 w-full">
           <div className="flex items-center w-full">
             <div
               className="w-full flex justify-center items-center"
@@ -112,15 +142,44 @@ export const OrderModule = () => {
                 onSwiper={(it) => (sliderRef.current = it)}
                 modules={[Navigation]}
                 className="flex"
-                slidesPerView={5}
+                // slidesPerView={5}
                 spaceBetween={10}
+                breakpoints={{
+                  200: {
+                    // width: 576,
+                    slidesPerView: 2,
+                  },
+                  768: {
+                    // width: 768,
+                    slidesPerView: 5,
+                  },
+                }}
               >
+                <SwiperSlide
+                  className={`rounded-full px-4 py-2 flex justify-center items-center border-2 border-theme-red text-sm ${
+                    activeCategory === null ? "bg-theme-red text-white" : ""
+                  }`}
+                  onClick={() => {
+                    setActiveCategory(null);
+                    setMenu(allMenu);
+                  }}
+                >
+                  All Menu
+                </SwiperSlide>
                 {data?.category?.map((item, index) => {
                   const categoryName = formatCategoryName(item.name);
                   return (
                     <SwiperSlide
                       key={index}
-                      className="rounded-full px-4 py-2 flex justify-center items-center border-2 border-theme-red text-sm"
+                      className={`rounded-full px-4 py-2 flex justify-center items-center border-2 border-theme-red text-sm ${
+                        activeCategory === item.name
+                          ? "bg-theme-red text-white"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        setActiveCategory(item.name);
+                        handleFilterClick(item.name);
+                      }}
                     >
                       {categoryName}
                     </SwiperSlide>
@@ -136,7 +195,7 @@ export const OrderModule = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-5 h-full my-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-5 h-full my-8">
             {menu &&
               menu?.menuItems &&
               menu?.menuItems?.map((item, index) => (
@@ -155,14 +214,14 @@ export const OrderModule = () => {
                       ) : (
                         <div className="bg-gray-300 rounded-lg flex flex-col justify-center items-center mb-3 aspect-square">
                           <IconImagePlaceholder size={100} color={"#fff"} />
-                          <p className="text-gray-600 font-bold">
+                          <p className="text-gray-600 font-bold text-center">
                             Image Not Available
                           </p>
                         </div>
                       )}
 
                       <div>
-                        <h3 className="font-bold text-2xl text-theme-red mt-4 mb-2">
+                        <h3 className="font-bold md:text-2xl text-theme-red mt-4 mb-2">
                           {item.itemName}
                         </h3>
                         <p className="md:block hidden text-sm">
@@ -213,12 +272,31 @@ export const OrderModule = () => {
           </div>
         </div>
       </div>
-      <div className="w-1/3  min-h-screen">
+      <div
+        className={`w-full absolute md:static md:w-1/3 py-5 md:-translate-x-0 bottom-0 min-h-screen ${
+          isSidebarVisible ? "" : "-translate-x-full  hidden "
+        } md:block fixed`}
+      >
+        <div
+          className="absolute right-5 top-24 md:hidden z-30"
+          onClick={() => {
+            setIsSidebarVisible(false);
+          }}
+        >
+          <AiOutlineCloseCircle size={25} className="text-red-500" />
+        </div>
         <OrderSidebar
           selectedMenu={selectedMenu}
           addToCart={addToCart}
           subtractFromCart={subtractFromCart}
         />
+      </div>
+      <div
+        className="w-[90%] fixed bg-theme-pink rounded-full mx-5 bottom-10 flex justify-center items-center py-3 gap-5 md:hidden border-2 border-theme-red"
+        onClick={toggleSidebar}
+      >
+        <BsCart2 size={25} />
+        <p className="font-bold text-lg">Your Order</p>
       </div>
     </div>
   );
