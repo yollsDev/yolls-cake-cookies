@@ -195,7 +195,7 @@ export const TopNavbar = () => {
             </li>
             <li onClick={toggleMobileNav}>
               <LinkButton
-                to="/"
+                to="/order/menu"
                 text="Order"
                 className={
                   "bg-theme-brown text-white hover:border-2 hover:border-theme-brown hover:bg-transparent hover:text-[#AE4E38]"
@@ -204,7 +204,7 @@ export const TopNavbar = () => {
             </li>
             <li onClick={toggleMobileNav}>
               <LinkButton
-                to="/login"
+                to="/auth/member/login"
                 text="Login"
                 className={
                   "bg-transparent text-theme-brown border-2 border-[#AE4E38] hover:bg-[#AE4E38] hover:text-white"
