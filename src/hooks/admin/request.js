@@ -4,7 +4,8 @@ export const MenuRequest = async () => {
   try {
     let { data: menuItems, error } = await supabase
       .from("menuItems")
-      .select("*");
+      .select("*")
+      .order("menuItem_id", { ascending: false });
 
     return { menuItems, error };
   } catch (error) {
