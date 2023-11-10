@@ -154,6 +154,8 @@ export const UseEditMenu = () => {
   return {
     editMenuItem,
     isEditingMenuItem: editMenuMutation.isLoading,
+    errorEditingMenuItem: editMenuMutation.error,
+    errorUploadingImage: uploadImageMutation.error,
   };
 };
 

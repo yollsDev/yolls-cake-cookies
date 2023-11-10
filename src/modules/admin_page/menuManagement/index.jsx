@@ -105,12 +105,21 @@ export const MenuManagementModule = () => {
   ];
 
   useEffect(() => {
-    setPaginatedData(
-      MenuItems.slice(start, end).filter((item) =>
-        item.itemName.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+    const filteredData = MenuItems.filter((item) =>
+      item.itemName.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  }, [start, end, MenuItems, searchQuery]);
+
+    const newTotalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+    if (currentPage > newTotalPages) {
+      setCurrentPage(newTotalPages);
+    }
+
+    const newStart = (currentPage - 1) * itemsPerPage;
+    const newEnd = newStart + itemsPerPage;
+
+    setPaginatedData(filteredData.slice(newStart, newEnd));
+  }, [currentPage, MenuItems, searchQuery, itemsPerPage]);
 
   const table = useReactTable({
     data: paginatedData,

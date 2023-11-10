@@ -3,6 +3,7 @@ import { BackButton, DashboardHeader, MenuForm } from "../../../../components";
 import { UseImageUploadAndFormSubmit } from "../../../../hooks/admin/hooks";
 import { set, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export const MenuAddModule = () => {
   // Define selectedImage state
@@ -21,7 +22,9 @@ export const MenuAddModule = () => {
     });
 
     setResetForm(true);
+    navigate(`/admin/menu-management`);
   };
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
@@ -33,12 +36,11 @@ export const MenuAddModule = () => {
           data,
           handleSuccess
         );
+      } else {
+        imageUrl = await uploadImageAndFormSubmit(null, data, handleSuccess);
       }
 
       data.imageURL = imageUrl;
-
-      // Handle form submission success
-      setResetForm(true);
     } catch (error) {
       // Handle form submission error
       console.error(

@@ -16,7 +16,8 @@ export const MenuEditModule = () => {
 
   const navigate = useNavigate();
 
-  const { editMenuItem } = UseEditMenu();
+  const { editMenuItem, errorEditingMenuItem, errorUploadingImage } =
+    UseEditMenu();
 
   const { data } = GetMenuDetail(id);
   const menuDetail = data?.menuDetail;
@@ -32,12 +33,27 @@ export const MenuEditModule = () => {
     setResetForm(true);
   };
 
+  const handleError = (error) => {
+    console.log(error);
+    Swal.fire({
+      icon: "error",
+      title: error,
+      timer: 2000,
+    });
+  };
+
   const onSubmit = async (data) => {
     try {
       let imageUrl = null;
 
       if (selectedImage) {
-        imageUrl = await editMenuItem(id, selectedImage, data, handleSuccess);
+        imageUrl = await editMenuItem(
+          id,
+          selectedImage,
+          data,
+          handleSuccess,
+          handleError("Error editing menu item, Try Again with other image")
+        );
       } else {
         imageUrl = await editMenuItem(
           id,
@@ -63,11 +79,25 @@ export const MenuEditModule = () => {
   // Define imageUrl based on whether an image is selected in MenuForm
   const imageURL = selectedImage ? URL.createObjectURL(selectedImage) : "";
 
-  // Function to handle image selection
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setSelectedImage(file);
+
+    // Extract the original file extension
+    const originalFileName = file.name;
+    const originalFileExtension = originalFileName.slice(
+      ((originalFileName.lastIndexOf(".") - 1) >>> 0) + 2
+    );
+
+    // Generate a unique identifier (e.g., timestamp or random string)
+    const uniqueIdentifier = Date.now(); // You can use a more robust method for production
+
+    // Construct the new unique file name
+    const newFileName = `newFileName_${uniqueIdentifier}.${originalFileExtension}`;
+    const renamedFile = new File([file], newFileName, { type: file.type });
+
+    setSelectedImage(renamedFile);
   };
+
   return (
     <div>
       <DashboardHeader title={"Menu Edit"} />
