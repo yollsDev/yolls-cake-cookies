@@ -113,7 +113,7 @@ export const TopNavbar = () => {
                 Home
               </NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink
                 onClick={toggleMobileNav}
                 to="/about-us"
@@ -144,8 +144,8 @@ export const TopNavbar = () => {
               >
                 Menu
               </NavLink>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <NavLink
                 onClick={toggleMobileNav}
                 to="/customer-service"
@@ -160,8 +160,8 @@ export const TopNavbar = () => {
               >
                 Customer Service
               </NavLink>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <NavLink
                 onClick={toggleMobileNav}
                 to="/testimony"
@@ -176,8 +176,8 @@ export const TopNavbar = () => {
               >
                 Testimony
               </NavLink>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <NavLink
                 onClick={toggleMobileNav}
                 to="/career"
@@ -192,7 +192,7 @@ export const TopNavbar = () => {
               >
                 Career
               </NavLink>
-            </li>
+            </li> */}
             <li onClick={toggleMobileNav}>
               <LinkButton
                 to="/order/menu"

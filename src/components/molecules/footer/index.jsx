@@ -30,7 +30,7 @@ export const Footer = () => {
                   Home
                 </a>
               </li>
-              <li className="mb-4">
+              {/* <li className="mb-4">
                 <a href="/menu" className="hover:underline">
                   Menu
                 </a>
@@ -56,7 +56,7 @@ export const Footer = () => {
                 <a href="/testimony" className="hover:underline">
                   Testimony
                 </a>
-              </li>
+              </li> */}
               <li className="mb-4">
                 <a href="/order" className="hover:underline">
                   Order

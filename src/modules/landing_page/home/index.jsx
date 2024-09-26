@@ -12,7 +12,7 @@ export const HomeModule = () => {
         </p>
         <div>
           <LinkButton
-            to="/menu"
+            to="/order/menu"
             text="See Our Menu"
             className={
               "bg-theme-brown text-white hover:border-2 hover:border-theme-brown hover:bg-transparent hover:text-[#AE4E38]"
