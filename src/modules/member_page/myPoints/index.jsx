@@ -76,7 +76,9 @@ export const MyPointsModule = () => {
       <div className="px-5 p-8">
         <div className="grid grid-cols-4  gap-8">
           <div className="bg-theme-peach py-8 mx-6 flex flex-col justify-center items-center text-white rounded-xl">
-            <p className="text-4xl font-bold">4200</p>
+            <p className="text-4xl font-bold">
+              {memberData ? memberData.member?.points : "-"}
+            </p>
             <p className="text-xl">Points</p>
           </div>
           <div className="col-span-3 rounded-xl bg-theme-pink py-5 px-8">
