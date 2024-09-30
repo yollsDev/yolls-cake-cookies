@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { IconImagePlaceholder, TextInput } from "../../atoms";
-import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  loginValidationSchema,
-  orderValidationSchema,
-} from "../../../validationSchema";
-import { UseLogin } from "../../../hooks/auth/hooks";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { supabase } from "../../../config/supabaseClient";
+import { UseLogin } from "../../../hooks/auth/hooks";
 import {
   useInsertInvoice,
   useInsertOrder,
@@ -16,9 +12,11 @@ import {
   useInsertPointTransaction,
   useUpdatePoint,
 } from "../../../hooks/order/hooks";
-import { useNavigate } from "react-router-dom";
-import { BsCart2 } from "react-icons/bs";
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import {
+  loginValidationSchema,
+  orderValidationSchema,
+} from "../../../validationSchema";
+import { IconImagePlaceholder, TextInput } from "../../atoms";
 
 export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
   const [isMember, setIsMember] = useState(false);
