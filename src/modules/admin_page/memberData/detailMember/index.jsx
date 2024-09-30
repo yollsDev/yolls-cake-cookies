@@ -41,6 +41,7 @@ export const MemberDetailModule = () => {
       setValue("email", dataUser.users?.email);
       setValue("birthdate", memberData.birthDate);
       setValue("city", memberData.city);
+      setValue("points", memberData.points);
       //   setValue(
       //     "status",
       //     menuDetail.status.charAt(0).toUpperCase() + menuDetail.status.slice(1)
@@ -51,6 +52,7 @@ export const MemberDetailModule = () => {
       setValue("email", "");
       setValue("birthdate", "");
       setValue("city", "");
+      setValue("points", "");
       //   setValue("status", "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,7 +83,7 @@ export const MemberDetailModule = () => {
               label="Email"
               name="email"
               control={control}
-              error={errors.email?.message}
+              error={errors.email?.email}
               placeholder={"admin@mail.com"}
             />
             <TextInput
@@ -99,6 +101,15 @@ export const MemberDetailModule = () => {
               control={control}
               error={errors.city?.message}
               placeholder={"Jakarta/Bogor/etc.."}
+            />
+            <TextInput
+              type="text"
+              label="Points"
+              name="points"
+              control={control}
+              error={errors.points?.message}
+              placeholder={"Points"}
+              disabled={true}
             />
             {/* <TextInput
               type="password"

@@ -121,6 +121,10 @@ export const MemberDataModule = () => {
       },
     },
     {
+      header: "Points",
+      accessorKey: "points",
+    },
+    {
       header: "Actions",
       cell: (props) => (
         <div className="flex gap-5 justify-center">
