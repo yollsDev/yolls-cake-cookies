@@ -40,9 +40,10 @@ export const signUpRequest = async (params) => {
       options: {
         data: {
           name: params.name,
-          city: params.city,
+          // city: params.city,
           birthdate: params.birthdate,
           role: params.role,
+          phone: params.phone,
         },
       },
     });
@@ -77,7 +78,7 @@ export const signUpRequest = async (params) => {
           {
             user_id: user.id,
             name: params.name,
-            city: params.city,
+            phone: params.phone,
             birthDate: params.birthdate,
             points: 0,
           },

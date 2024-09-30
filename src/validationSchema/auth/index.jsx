@@ -13,7 +13,10 @@ export const registerValidationSchema = Yup.object().shape({
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters"),
-  city: Yup.string().required("City is required").min(3, "City is too short"),
+  // city: Yup.string().required("City is required").min(3, "City is too short"),
+  phone: Yup.string()
+    .required("Phone Number is required")
+    .min(10, "phone number is too short"),
   birthdate: Yup.string().required("Birthdate is required"),
   confirmPassword: Yup.string().oneOf(
     [Yup.ref("password"), null],

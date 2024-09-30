@@ -18,12 +18,13 @@ export const RegisterForm = ({ type }) => {
     mode: "all",
     defaultValues: {
       name: "",
-      city: "",
+      // city: "",
       birthdate: "",
       email: "",
       password: "",
       confirmPassword: "",
       role: type,
+      phone: "",
     },
   });
 
@@ -57,6 +58,8 @@ export const RegisterForm = ({ type }) => {
   );
 
   const onSubmit = async (data) => {
+    print(data);
+
     try {
       await mutate(data);
     } catch (error) {
@@ -103,11 +106,11 @@ export const RegisterForm = ({ type }) => {
         />
         <TextInput
           type="text"
-          label="City"
-          name="city"
+          label="Phone number"
+          name="phone"
           control={control}
-          error={errors.city?.message}
-          placeholder={"Jakarta/Bogor/etc.."}
+          error={errors.phone?.message}
+          placeholder={"+62021231023102"}
         />
         <TextInput
           type="password"

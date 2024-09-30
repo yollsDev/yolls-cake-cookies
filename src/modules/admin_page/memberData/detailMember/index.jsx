@@ -40,8 +40,10 @@ export const MemberDetailModule = () => {
       setValue("name", memberData.name);
       setValue("email", dataUser.users?.email);
       setValue("birthdate", memberData.birthDate);
-      setValue("city", memberData.city);
+      // setValue("city", memberData.city);
       setValue("points", memberData.points);
+      setValue("phone", memberData.phone);
+      console.log("phone", memberData);
       //   setValue(
       //     "status",
       //     menuDetail.status.charAt(0).toUpperCase() + menuDetail.status.slice(1)
@@ -51,8 +53,9 @@ export const MemberDetailModule = () => {
       setValue("name", "");
       setValue("email", "");
       setValue("birthdate", "");
-      setValue("city", "");
+      // setValue("city", "");
       setValue("points", "");
+      setValue("phone", "");
       //   setValue("status", "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,7 +63,7 @@ export const MemberDetailModule = () => {
 
   return (
     <div>
-      <DashboardHeader title={"Menu Detail"} />
+      <DashboardHeader title={"Member Detail"} />
       <div className="px-10 py-5 grid grid-cols-1 gap-6">
         <BackButton />
 
@@ -94,13 +97,21 @@ export const MemberDetailModule = () => {
               error={errors.birthdate?.message}
               placeholder={"dd/mm/yyyy"}
             />
-            <TextInput
+            {/* <TextInput
               type="text"
               label="City"
               name="city"
               control={control}
               error={errors.city?.message}
               placeholder={"Jakarta/Bogor/etc.."}
+            /> */}
+            <TextInput
+              type="text"
+              label="Phone Number"
+              name="phone"
+              control={control}
+              error={errors.phone?.message}
+              placeholder={"+123123123"}
             />
             <TextInput
               type="text"
