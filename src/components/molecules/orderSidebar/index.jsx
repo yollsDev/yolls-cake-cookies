@@ -16,7 +16,7 @@ import {
   loginValidationSchema,
   orderValidationSchema,
 } from "../../../validationSchema";
-import { IconImagePlaceholder, TextInput } from "../../atoms";
+import { IconImagePlaceholder, LinkButton, TextInput } from "../../atoms";
 
 export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
   const [isMember, setIsMember] = useState(false);
@@ -222,7 +222,16 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
         className={` w-full transition-transform sm:translate-x-0 bg-theme-pink px-5 pt-24 md:pt-5 h-screen fixed overflow-y-scroll  min-h-screen `}
         aria-label="Sidebar"
       >
-        <h1 className="text-2xl font-bold">My Order</h1>
+        <div className="flex justify-between">
+          <h1 className="text-2xl font-bold">My Order</h1>
+          <LinkButton
+            to="/auth/member/login"
+            text="Login"
+            className={
+              "bg-transparent text-theme-brown border-2 border-[#AE4E38] hover:bg-[#AE4E38] hover:text-white"
+            }
+          />
+        </div>
         <hr className="h-0.5 my-4 bg-theme-brown border-0" />
         <div>
           <div>
