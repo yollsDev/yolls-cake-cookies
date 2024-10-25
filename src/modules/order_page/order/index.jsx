@@ -1,20 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { GetCategoryData, useMenuByCategory } from "../../../hooks/order/hooks";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { useEffect, useRef, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { GetCategoryData } from "../../../hooks/order/hooks";
 
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import { BsCart2 } from "react-icons/bs";
 import "swiper/css";
 import "swiper/css/navigation";
+import { IconImagePlaceholder, OrderSidebar } from "../../../components";
 import { GetMenuData } from "../../../hooks/admin/hooks";
-import {
-  IconImagePlaceholder,
-  MenuCard,
-  OrderSidebar,
-} from "../../../components";
 import { MenuByCategoryRequest } from "../../../hooks/order/request";
-import { BsCart2 } from "react-icons/bs";
-import { AiOutlineCloseCircle } from "react-icons/ai";
 
 export const OrderModule = () => {
   const { data } = GetCategoryData();

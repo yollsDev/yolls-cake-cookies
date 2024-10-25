@@ -25,11 +25,11 @@ export const Footer = () => {
           </div>
           <div className="grid grid-cols-2 gap-8 border-theme-brown border-0 md:border-r-4 px-10 md:px-14">
             <ul className="text-gray-500  font-medium">
-              <li className="mb-4">
+              {/* <li className="mb-4">
                 <a href="/" className="hover:underline">
                   Home
                 </a>
-              </li>
+              </li> */}
               {/* <li className="mb-4">
                 <a href="/menu" className="hover:underline">
                   Menu
