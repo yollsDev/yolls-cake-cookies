@@ -73,7 +73,7 @@ export const ReceiptModule = () => {
   ];
 
   const table = useReactTable({
-    data: orderItem?.data,
+    data: orderItem?.data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
