@@ -36,11 +36,11 @@ import { ReceiptPage } from "./pages/order_page/ReceiptPage";
 
 const router = createBrowserRouter([
   {
-    element: <Guest />,
+    element: <Order />,
     children: [
       {
         path: "/",
-        element: <HomePage />,
+        element: <OrderPage />,
       },
       {
         path: "/about-us",
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/menu",
-        element: <MenuPage />,
+        element: <OrderPage />,
       },
       {
         path: "/customer-service",
