@@ -47,7 +47,7 @@ const router = createBrowserRouter([
         element: <AboutUsPage />,
       },
       {
-        path: "/menu",
+        path: "/order",
         element: <OrderPage />,
       },
       {

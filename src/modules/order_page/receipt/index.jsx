@@ -13,6 +13,7 @@ import {
 import { getMenuItem } from "../../../hooks/member/orderHistory/request";
 import { LinkButton } from "../../../components";
 import Swal from "sweetalert2";
+import { GetPointSettingsData } from "../../../hooks/point-settings/hooks";
 
 export const ReceiptModule = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ export const ReceiptModule = () => {
   const { data: orderData } = useOrderById(id);
   const { data: orderItem, isLoading, isError, error } = useOrderItem(id);
   const navigate = useNavigate();
+  const { data: pointSettingsData } = GetPointSettingsData();
 
   const [data, setData] = useState();
   console.log(data);
@@ -175,9 +177,17 @@ export const ReceiptModule = () => {
                   <span className="font-bold md:text-lg mt-5">
                     Points Earned :
                   </span>
-                  <span className="font-bold md:text-lg mt-5">
-                    {(invoiceData?.data[0].totalAmount / 5000) * 100}
-                  </span>
+                  {pointSettingsData ? (
+                    <span className="font-bold md:text-lg mt-5">
+                      {(invoiceData?.data[0].totalAmount /
+                        pointSettingsData.data[0].amount_for_points) *
+                        pointSettingsData.data[0].points_per_amount}
+                    </span>
+                  ) : (
+                    <span className="font-bold md:text-lg mt-5">
+                      {(invoiceData?.data[0].totalAmount / 5000) * 100}
+                    </span>
+                  )}
                 </>
               )}
             </div>

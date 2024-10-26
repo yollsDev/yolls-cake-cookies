@@ -17,6 +17,7 @@ import {
   orderValidationSchema,
 } from "../../../validationSchema";
 import { IconImagePlaceholder, LinkButton, TextInput } from "../../atoms";
+import { GetPointSettingsData } from "../../../hooks/point-settings/hooks";
 
 export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
   const [isMember, setIsMember] = useState(false);
@@ -24,6 +25,7 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
   const [verifyMessage, setVerifyMessage] = useState("");
   const [member, setMember] = useState(null);
   const navigate = useNavigate();
+  const { data: pointSettingsData } = GetPointSettingsData();
 
   const {
     control,
@@ -145,7 +147,6 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
               quantity: item.quantity,
               subtotal: item.price * item.quantity,
             };
-            console.log("orderItemData", orderItemData);
             insertOrderItemMutate(orderItemData, {
               onSuccess: () => {
                 orderReset();
@@ -162,12 +163,23 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
           insertInvoiceMutate(invoiceData);
 
           if (totalPrice > 5000 && isMember) {
-            const pointTransactionData = {
-              member_id: member?.member?.member_id,
-              pointsChange: (totalPrice / 5000) * 100,
-              type: "EARN",
-            };
-            insertPointTransactionMutate(pointTransactionData);
+            if (pointSettingsData) {
+              const pointTransactionData = {
+                member_id: member?.member?.member_id,
+                pointsChange:
+                  (totalPrice / pointSettingsData.data[0].amount_for_points) *
+                  pointSettingsData.data[0].points_per_amount,
+                type: "EARN",
+              };
+              insertPointTransactionMutate(pointTransactionData);
+            } else {
+              const pointTransactionData = {
+                member_id: member?.member?.member_id,
+                pointsChange: (totalPrice / 5000) * 100,
+                type: "EARN",
+              };
+              insertPointTransactionMutate(pointTransactionData);
+            }
           }
 
           if (useMemberPoint) {
@@ -180,11 +192,21 @@ export const OrderSidebar = ({ selectedMenu, addToCart, subtractFromCart }) => {
           }
 
           if (isMember) {
-            const pointData = {
-              points: (totalPrice / 5000) * 100,
-              member_id: member?.member?.member_id,
-            };
-            updatePointMutate(pointData);
+            if (pointSettingsData) {
+              const pointData = {
+                points:
+                  (totalPrice / pointSettingsData.data[0].amount_for_points) *
+                  pointSettingsData.data[0].points_per_amount,
+                member_id: member?.member?.member_id,
+              };
+              updatePointMutate(pointData);
+            } else {
+              const pointData = {
+                points: (totalPrice / 5000) * 100,
+                member_id: member?.member?.member_id,
+              };
+              updatePointMutate(pointData);
+            }
           }
           Swal.fire({
             html:
