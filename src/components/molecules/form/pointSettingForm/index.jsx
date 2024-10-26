@@ -1,24 +1,16 @@
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { menuValidationSchema } from "../../../../validationSchema";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import {
-  TextInput,
-  TextAreaInput,
-  DropDownInput,
-  LinkButton,
-  IconImagePlaceholder,
-} from "../../../atoms";
-import { useDeleteMenuItem } from "../../../../hooks/admin/hooks";
-import Swal from "sweetalert2";
 import { pointSettingsValidationSchema } from "../../../../validationSchema/pointSettings";
+import { LinkButton, TextAreaInput, TextInput } from "../../../atoms";
 
 export const PointSettingForm = ({
   isDisabled,
   pointSettingData,
   onSubmit,
   resetForm,
+  toggleEdit,
 }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -65,25 +57,6 @@ export const PointSettingForm = ({
     }
   }, [resetForm, reset]);
 
-  const { deleteMenuItem, isDeleting } = useDeleteMenuItem();
-
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You will not be able to recover this menu item!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "Cancel",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Handle the deletion logic here
-        deleteMenuItem(id); // Call your deleteMenuItem function
-        navigate("/admin/menu-management");
-      }
-    });
-  };
-
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -125,7 +98,10 @@ export const PointSettingForm = ({
               {isDisabled ? (
                 <div className="flex gap-3 justify-end">
                   <button
-                    // onClick={() => handleDelete(menuDetail?.menuItem_id)}/
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleEdit();
+                    }}
                     className="text-white bg-theme-error hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1.5 w-24 mb-2"
                   >
                     Edit
@@ -139,7 +115,7 @@ export const PointSettingForm = ({
                   >
                     Save
                   </button>
-                  <div onClick={() => navigate(-1)} className="h-fit">
+                  <div onClick={toggleEdit} className="h-fit">
                     <LinkButton
                       className="text-gray-400 bg-transparent hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 border-2 border-gray-400 font-medium rounded-full w-24 h-full  p-1.5"
                       size={"sm"}
