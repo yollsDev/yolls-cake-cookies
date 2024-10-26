@@ -4,6 +4,7 @@ import {
   IconMenu,
   IconPayment,
   IconPerson,
+  IconGift,
 } from "../components";
 import { Outlet, useNavigate } from "react-router-dom";
 import { UseUser } from "../hooks/auth/hooks";
@@ -28,6 +29,11 @@ export const Admin = () => {
       menu: "Member Data",
       path: "/admin/member-data",
       icon: <IconPerson size={25} />,
+    },
+    {
+      menu: "Point Management",
+      path: "/admin/point-management",
+      icon: <IconGift size={25} />,
     },
   ];
 

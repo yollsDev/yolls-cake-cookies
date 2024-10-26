@@ -33,6 +33,7 @@ import { OrderDetailPage } from "./pages/member_page/OrderDetailPage";
 import { ProfileEditPage } from "./pages/member_page/ProfileEditPage";
 import { OrderPage } from "./pages/order_page";
 import { ReceiptPage } from "./pages/order_page/ReceiptPage";
+import { PointManagementPage } from "./pages/admin_page/PointManagementPage";
 
 const router = createBrowserRouter([
   {
@@ -115,6 +116,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/menu-add",
         element: <MenuAddPage />,
+      },
+      {
+        path: "/admin/point-management",
+        element: <PointManagementPage />,
       },
     ],
   },
