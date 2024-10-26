@@ -9,11 +9,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useQueryClient } from "@tanstack/react-query";
+import { GetPointSettingsData } from "../../../hooks/point-settings/hooks";
 
 export const MyPointsModule = () => {
   const [pointData, setPointData] = useState([]);
   const queryClient = useQueryClient();
   const { data: user } = UseUser();
+  const { data: pointSettingsData } = GetPointSettingsData();
 
   const { data: memberData, isSuccess } = useMemberByID(user?.user.id);
 
@@ -70,6 +72,8 @@ export const MyPointsModule = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  // console.log("pointSettingsData", pointSettingsData);
+
   return (
     <div>
       <DashboardHeader title={"My Points"} />
@@ -81,11 +85,20 @@ export const MyPointsModule = () => {
             </p>
             <p className="text-xl">Points</p>
           </div>
+
           <div className="col-span-3 rounded-xl bg-theme-pink py-5 px-8">
-            <p className="font-bold mb-2">Notes</p>
-            <p>Get 100 points for every Rp 5000,00 transaction in our outlet</p>
-            <p>Use this points to get discount for your transaction</p>
-            <p>Enjoy!</p>
+            {pointSettingsData ? (
+              <>
+                <p className="font-bold mb-2">Notes</p>
+                <p>{pointSettingsData.data[0].notes}</p>
+                {/* <p>Use this points to get discount for your transaction</p>
+                <p>Enjoy!</p> */}
+              </>
+            ) : (
+              <>
+                <p>No point data...</p>
+              </>
+            )}
           </div>
         </div>
         <hr className="h-0.5 my-8 bg-theme-brown border-0" />
