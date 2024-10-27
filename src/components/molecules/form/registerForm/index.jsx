@@ -58,8 +58,6 @@ export const RegisterForm = ({ type }) => {
   );
 
   const onSubmit = async (data) => {
-    print(data);
-
     try {
       await mutate(data);
     } catch (error) {
