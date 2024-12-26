@@ -171,7 +171,7 @@ export const MemberDataModule = () => {
 
   return (
     <div>
-      <DashboardHeader title={"Payment Management"} />
+      <DashboardHeader title={"Member Data"} />
       <div className="px-5 p-8">
         <div className="px-4 ">
           <table className="w-full text-left text-sm sm:text-md bg-white shadow-lg rounded-xl">
