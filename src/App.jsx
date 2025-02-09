@@ -34,6 +34,7 @@ import { ProfileEditPage } from "./pages/member_page/ProfileEditPage";
 import { OrderPage } from "./pages/order_page";
 import { ReceiptPage } from "./pages/order_page/ReceiptPage";
 import { PointManagementPage } from "./pages/admin_page/PointManagementPage";
+import { ReviewPage } from "./pages/order_page/ReviewPage";
 
 const router = createBrowserRouter([
   {
@@ -158,6 +159,10 @@ const router = createBrowserRouter([
       {
         path: "/order/invoice/:id",
         element: <ReceiptPage />,
+      },
+      {
+        path: "/order/review/:id",
+        element: <ReviewPage />,
       },
     ],
   },
