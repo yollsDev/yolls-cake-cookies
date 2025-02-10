@@ -91,7 +91,7 @@ export const ReceiptModule = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // navigate(`/order/invoice/${data?.data[0]?.order_id}`);
-        navigate(`/order/menu`);
+        navigate(`/order/review/${data?.data[0]?.order_id}`);
       }
     });
   };
