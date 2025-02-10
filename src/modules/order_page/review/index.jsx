@@ -11,7 +11,11 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { getMenuItem } from "../../../hooks/member/orderHistory/request";
-import { IconImagePlaceholder, LinkButton } from "../../../components";
+import {
+  IconImagePlaceholder,
+  LinkButton,
+  TextAreaInput,
+} from "../../../components";
 import Swal from "sweetalert2";
 import { GetPointSettingsData } from "../../../hooks/point-settings/hooks";
 import StarRatingInput from "../../../components/molecules/starRatingInput";
@@ -113,29 +117,40 @@ export const ReviewModule = () => {
         <div className="w-full">
           <p className="text-xl mb-5">Add your review for us!</p>
         </div>
-        <div className="bg-white shadow-lg rounded-xl p-5 m-5 w-full">
+        <div className="bg-white shadow-lg rounded-xl p-5 m-5 w-3/4 mx-auto">
           {data && data?.data ? (
             itemData.map((item, index) => (
               <div key={index}>
-                <div className="flex gap-5">
-                  {item.imageURL !== null ? (
-                    <img
-                      src={`https://dedwkjaekevsyqqfyona.supabase.co/storage/v1/object/public/menu_image/${item.itemImage}`}
-                      alt={item.itemName}
-                      className="w-24 object-cover rounded-lg aspect-square"
-                    />
-                  ) : (
-                    <div className="bg-gray-300 rounded-lg flex flex-col justify-center items-center aspect-square w-24">
-                      <IconImagePlaceholder size={100} color={"#fff"} />
-                      <p className="text-gray-600 font-bold text-center">
-                        Image Not Available
-                      </p>
-                    </div>
-                  )}
+                <div className="flex gap-5 justify-between">
+                  <div className="flex gap-5">
+                    {item.imageURL !== null ? (
+                      <img
+                        src={`https://dedwkjaekevsyqqfyona.supabase.co/storage/v1/object/public/menu_image/${item.itemImage}`}
+                        alt={item.itemName}
+                        className="w-24 object-cover rounded-lg aspect-square"
+                      />
+                    ) : (
+                      <div className="bg-gray-300 rounded-lg flex flex-col justify-center items-center aspect-square w-24">
+                        <IconImagePlaceholder size={100} color={"#fff"} />
+                        <p className="text-gray-600 font-bold text-center">
+                          Image Not Available
+                        </p>
+                      </div>
+                    )}
 
-                  <p className="text-lg font-bold">{item.itemNames}</p>
-                  <StarRatingInput
-                    onRate={(rating) => handleRating(index, rating)}
+                    <div>
+                      <p className="text-lg font-bold mb-2">{item.itemNames}</p>
+                      <StarRatingInput
+                        onRate={(rating) => handleRating(index, rating)}
+                      />
+                    </div>
+                  </div>
+
+                  <textarea
+                    id={"review-comment"}
+                    placeholder={"comments"}
+                    rows="4"
+                    className="bg-white border border-theme-pink text-gray-900 text-sm rounded-lg focus:ring-theme-pink focus:border-2 focus:border-theme-peach block w-1/2 p-2.5"
                   />
                 </div>
                 <hr className="h-0.5 my-4 bg-theme-brown border-0 w-full" />
@@ -144,6 +159,24 @@ export const ReviewModule = () => {
           ) : (
             <p>loading</p>
           )}
+        </div>
+
+        <div className="bg-white shadow-lg rounded-xl p-5 m-5 w-3/4 mx-auto">
+          <div>
+            <div className="flex gap-5 flex-col justify-center items-center">
+              <p className="text-lg font-bold mb-2">
+                Review for Yolls Cake & Cookies
+              </p>
+              <StarRatingInput onRate={(rating) => console.log(rating)} />
+              <textarea
+                id={"review-comment"}
+                placeholder={"comments"}
+                rows="4"
+                className="bg-white border border-theme-pink text-gray-900 text-sm rounded-lg focus:ring-theme-pink focus:border-2 focus:border-theme-peach block w-1/2 p-2.5"
+              />
+            </div>
+            <hr className="h-0.5 my-4 bg-theme-brown border-0 w-full" />
+          </div>
         </div>
       </div>
 
