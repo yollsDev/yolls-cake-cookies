@@ -122,3 +122,25 @@ export const MenuByCategoryRequest = async (category) => {
     return { error: error.message };
   }
 };
+
+// Review
+export const addReviewRequest = async (data) => {
+  try {
+    const reviewData = {
+      menuItem_id: data.menuItem_id,
+      rating: data.rating,
+      comment: data.comment,
+      user_id: data.user_id,
+    };
+
+    let { data: review, error } = await supabase
+      .from("reviews")
+      .insert([reviewData])
+      .select();
+
+    return { review, error };
+  } catch (error) {
+    console.error("Add Review Request error request:", error.message);
+    return { error: error.message };
+  }
+};

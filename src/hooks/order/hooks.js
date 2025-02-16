@@ -5,6 +5,7 @@ import {
   addInvoiceRequest,
   addOrderItemRequest,
   addOrderRequest,
+  addReviewRequest,
   pointTransactionRequest,
   updatePointRequest,
 } from "./request";
@@ -55,3 +56,11 @@ export const useMenuByCategory = (category) =>
     queryKey: ["get-menu-by-category", category],
     queryFn: async () => await MenuByCategoryRequest(category),
   });
+
+// Review
+export const useInsertReview = () => {
+  return useMutation({
+    mutationKey: ["insert-review"],
+    mutationFn: async (data) => await addReviewRequest(data),
+  });
+};
