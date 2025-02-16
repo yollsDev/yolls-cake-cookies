@@ -78,8 +78,19 @@ export const ReviewModule = () => {
       confirmButtonColor: "#78002C",
     }).then((result) => {
       if (result.isConfirmed) {
-        // navigate(`/order/menu`);
+        navigate(`/order/menu`);
       }
+    });
+  };
+
+  const handleErrorInsertReview = () => {
+    Swal.fire({
+      toast: true,
+      title: "Submit review error! Please try again",
+      icon: "error",
+      position: "top-center",
+      showConfirmButton: false,
+      timer: 1500,
     });
   };
 
