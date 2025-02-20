@@ -6,6 +6,7 @@ import {
   addOrderItemRequest,
   addOrderRequest,
   addReviewRequest,
+  getRestoReview,
   pointTransactionRequest,
   updatePointRequest,
 } from "./request";
@@ -64,3 +65,9 @@ export const useInsertReview = () => {
     mutationFn: async (data) => await addReviewRequest(data),
   });
 };
+
+export const useRestoReview = () =>
+  useQuery({
+    queryKey: ["get-resto-review"],
+    queryFn: async () => await getRestoReview(),
+  });

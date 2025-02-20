@@ -35,6 +35,7 @@ import { OrderPage } from "./pages/order_page";
 import { ReceiptPage } from "./pages/order_page/ReceiptPage";
 import { PointManagementPage } from "./pages/admin_page/PointManagementPage";
 import { ReviewPage } from "./pages/order_page/ReviewPage";
+import { RestoReviewPage } from "./pages/review_page";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
       {
         path: "/career",
         element: <CareerPage />,
+      },
+      {
+        path: "/reviews",
+        element: <RestoReviewPage />,
       },
     ],
   },

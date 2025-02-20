@@ -144,3 +144,17 @@ export const addReviewRequest = async (data) => {
     return { error: error.message };
   }
 };
+
+export const getRestoReview = async () => {
+  try {
+    let { data, error } = await supabase
+      .from("reviews")
+      .select("*")
+      .is("menuItem_id", null);
+
+    return { data, error };
+  } catch (error) {
+    console.error("Get Resto Review Request error request:", error.message);
+    return { error: error.message };
+  }
+};
