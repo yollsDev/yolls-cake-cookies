@@ -231,12 +231,11 @@ export const OrderModule = () => {
 
                         <p className="font-bold text-theme-red text-sm">
                           {item.avg_rating
-                            ? item.avg_rating
+                            ? `${item.avg_rating} (${item.review_count} Reviews)`
                             : "Belum ada rating"}
                         </p>
-                        <p className="font-bold text-theme-red text-sm">
-                          ({item.review_count} Reviews )
-                        </p>
+
+                        <p className="font-bold text-theme-red text-sm"></p>
                       </div>
                     </div>
 
