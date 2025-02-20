@@ -18,56 +18,125 @@ export const ReviewModule = () => {
   const { mutate: insertReviewMutate } = useInsertReview();
   const [itemData, setItemData] = useState([]);
   const [reviews, setReviews] = useState([]);
-
   const handleGetItem = async (id) => {
-    const item = await getMenuItem(id);
-    const ItemName = item?.data[0]?.itemName;
-    const ItemImage = item?.data[0]?.imageURL;
-    return { menuItem_id: id, itemName: ItemName, itemImage: ItemImage };
-  };
+    console.log(`🔍 handleGetItem called with id: ${id}`);
 
-  useEffect(() => {
-    if (orderItem && orderItem.data && orderData?.data?.[0]?.member_id) {
-      const getItemNames = async () => {
-        const itemMenuData = await Promise.all(
-          orderItem.data.map((item) => handleGetItem(item.menuItem_id))
-        );
-        setItemData(itemMenuData);
+    try {
+      const item = await getMenuItem(id);
+      console.log("✅ Fetched item:", item);
 
-        // Initialize reviews state
-        setReviews([
-          ...itemMenuData.map((item) => ({
-            menuItem_id: item.menuItem_id,
-            rating: 0,
-            comment: "",
-            user_id: orderData.data[0].member_id,
-          })),
-          {
-            menuItem_id: null,
-            rating: 0,
-            comment: "",
-            user_id: orderData.data[0].member_id,
-          },
-        ]);
+      if (!item || !item.data || item.data.length === 0) {
+        console.log("❌ No data found for menuItem_id:", id);
+        return null;
+      }
+
+      return {
+        menuItem_id: id,
+        itemName: item.data[0].itemName,
+        itemImage: item.data[0].imageURL,
       };
-      getItemNames();
+    } catch (error) {
+      console.error("❌ Error in handleGetItem:", error);
     }
+  };
+  useEffect(() => {
+    console.log("✅ useEffect triggered with orderItem:", orderItem);
+
+    if (!orderItem || !orderItem.data) {
+      console.log("❌ orderItem or orderItem.data is missing!");
+      return;
+    }
+
+    if (!Array.isArray(orderItem.data)) {
+      console.log("❌ orderItem.data is not an array!", orderItem.data);
+      return;
+    }
+
+    // if (!orderData?.data?.[0]?.member_id) {
+    //   console.log("❌ orderData is missing member_id!");
+    //   return;
+    // }
+
+    console.log("✅ Fetching item names...");
+    console.log("🔍 orderItem.data:", orderItem.data);
+
+    const getItemNames = async () => {
+      console.log("✅ Inside getItemNames function");
+
+      const itemMenuData = await Promise.all(
+        orderItem.data.map((item) => {
+          console.log("🔍 Processing menuItem_id:", item?.menuItem_id);
+          return handleGetItem(item?.menuItem_id);
+        })
+      );
+
+      console.log("✅ Final itemMenuData:", itemMenuData);
+      setItemData(itemMenuData.filter(Boolean));
+    };
+
+    getItemNames();
   }, [orderItem, orderData]);
 
+  // useEffect(() => {
+  //   console.log("✅ useEffect triggered with orderItem:", orderItem);
+
+  //   if (orderItem && orderItem.data && orderData?.data?.[0]?.member_id) {
+  //     const getItemNames = async () => {
+  //       const itemMenuData = await Promise.all(
+  //         orderItem.data.map((item) => handleGetItem(item.menuItem_id))
+  //       );
+  //       setItemData(itemMenuData);
+
+  //       // Initialize reviews state
+  //       setReviews([
+  //         ...itemMenuData.map((item) => ({
+  //           menuItem_id: item.menuItem_id,
+  //           rating: 0,
+  //           comment: "",
+  //           user_id: orderData.data[0].member_id,
+  //         })),
+  //         {
+  //           menuItem_id: null,
+  //           rating: 0,
+  //           comment: "",
+  //           user_id: orderData.data[0].member_id,
+  //         },
+  //       ]);
+  //     };
+  //     getItemNames();
+  //   }
+  // }, [orderItem, orderData]);
   const handleRating = (menuItem_id, rating) => {
-    setReviews((prev) =>
-      prev.map((review) =>
-        review.menuItem_id === menuItem_id ? { ...review, rating } : review
-      )
-    );
+    setReviews((prev) => {
+      const existingReview = prev.find(
+        (review) => review.menuItem_id === menuItem_id
+      );
+      if (existingReview) {
+        return prev.map((review) =>
+          review.menuItem_id === menuItem_id ? { ...review, rating } : review
+        );
+      } else {
+        return [...prev, { menuItem_id, rating, comment: "", user_id: null }];
+      }
+    });
   };
 
   const handleCommentChange = (menuItem_id, comment) => {
-    setReviews((prev) =>
-      prev.map((review) =>
-        review.menuItem_id === menuItem_id ? { ...review, comment } : review
-      )
-    );
+    setReviews((prev) => {
+      const existingReview = prev.find(
+        (review) => review.menuItem_id === menuItem_id
+      );
+
+      if (existingReview) {
+        // Update existing review
+        return prev.map((review) =>
+          review.menuItem_id === menuItem_id ? { ...review, comment } : review
+        );
+      } else {
+        // Add new review
+        return [...prev, { menuItem_id, rating: 0, comment, user_id: null }];
+      }
+    });
   };
 
   const handleSuccessInsertReview = () => {
@@ -106,6 +175,8 @@ export const ReviewModule = () => {
       return;
     }
 
+    // console.log(filteredReviews);
+
     filteredReviews.forEach((item, index) => {
       insertReviewMutate(
         {
@@ -128,6 +199,9 @@ export const ReviewModule = () => {
       );
     });
   };
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error: {error.message}</p>;
 
   return (
     <div className="px-5 md:px-28 gap-5 md:pt-32 pt-28 pb-10">
@@ -169,6 +243,11 @@ export const ReviewModule = () => {
                   placeholder="comments"
                   rows="4"
                   className="bg-white border border-theme-pink text-gray-900 text-sm rounded-lg focus:ring-theme-pink focus:border-2 focus:border-theme-peach block w-1/2 p-2.5"
+                  value={
+                    reviews.find((r) => r.menuItem_id === item.menuItem_id)
+                      ?.comment || ""
+                  }
+                  // value={""}
                   onChange={(e) =>
                     handleCommentChange(item.menuItem_id, e.target.value)
                   }
@@ -195,6 +274,8 @@ export const ReviewModule = () => {
             placeholder="comments"
             rows="4"
             className="bg-white border border-theme-pink text-gray-900 text-sm rounded-lg focus:ring-theme-pink focus:border-2 focus:border-theme-peach block w-1/2 p-2.5"
+            value={reviews.find((r) => r.menuItem_id === null)?.comment || ""}
+            // value={""}
             onChange={(e) => handleCommentChange(null, e.target.value)}
           />
         </div>

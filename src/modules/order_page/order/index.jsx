@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 import { IconImagePlaceholder, OrderSidebar } from "../../../components";
 import { GetMenuData } from "../../../hooks/admin/hooks";
 import { MenuByCategoryRequest } from "../../../hooks/order/request";
+import { FaStar } from "react-icons/fa";
 
 export const OrderModule = () => {
   const { data } = GetCategoryData();
@@ -222,6 +223,19 @@ export const OrderModule = () => {
                         </h3>
                         <p className="md:block hidden text-sm">
                           {item.description}
+                        </p>
+                      </div>
+
+                      <div className="flex gap-3 mt-3 items-start">
+                        <FaStar className="text-theme-red" size={15} />
+
+                        <p className="font-bold text-theme-red text-sm">
+                          {item.avg_rating
+                            ? item.avg_rating
+                            : "Belum ada rating"}
+                        </p>
+                        <p className="font-bold text-theme-red text-sm">
+                          ({item.review_count} Reviews )
                         </p>
                       </div>
                     </div>
